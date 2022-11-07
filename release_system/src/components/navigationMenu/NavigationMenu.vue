@@ -7,15 +7,15 @@
     <img src="@/assets/navigationMenuImages/plus-symbol.png" class="img">
     Запланировать релиз
   </navigation-menu-button>
-  <navigation-menu-button>
+  <navigation-menu-button @click="$router.push('/releasesList')">
     <img src="@/assets/navigationMenuImages/list-symbol.png" class="img" >
     Список релизов
   </navigation-menu-button>
-  <navigation-menu-button>
+  <navigation-menu-button @click="$router.push('/settings')">
     <img src="@/assets/navigationMenuImages/settings-symbol.png" class="img">
     Настройки
   </navigation-menu-button>
-  <navigation-menu-button>
+  <navigation-menu-button @click="$router.push('/logout')">
     <img src="@/assets/navigationMenuImages/log-out-symbol.png" class="img">
     Выйти
   </navigation-menu-button>

@@ -1,19 +1,17 @@
 <template>
   <div>
     <h1>
-      Здесь можно будет создать релиз
+      Не уходи
     </h1>
-    <span>Но пока тут котик</span>
+    <span>У нас есть котик</span>
   </div>
   <img src="@/assets/img/kitten.jpg">
 
 </template>
 
 <script>
-
 export default {
-  name: "CreateReleasePage",
-
+  name: "LogoutPage"
 }
 </script>
 
