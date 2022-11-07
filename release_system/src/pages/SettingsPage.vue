@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      Здесь можно будет создать релиз
+      Здесь будут настройки
     </h1>
     <span>Но пока тут котик</span>
   </div>
@@ -10,10 +10,8 @@
 </template>
 
 <script>
-
 export default {
-  name: "CreateReleasePage",
-
+  name: "SettingsPage"
 }
 </script>
 

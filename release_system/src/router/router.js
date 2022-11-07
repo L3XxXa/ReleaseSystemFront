@@ -1,9 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import createReleasePage from "@/pages/CreateReleasePage";
+import ListOfReleasesPage from "@/pages/ListOfReleasesPage";
+import settingsPage from "@/pages/SettingsPage";
+import logoutPage from "@/pages/LogoutPage";
 const routes = [
     {
         path: '/createRelease',
         component: createReleasePage,
+    },
+    {
+        path: '/releasesList',
+        component: ListOfReleasesPage
+    },
+    {
+        path: '/settings',
+        component: settingsPage
+    },
+    {
+        path: '/logout',
+        component: logoutPage
     }
 ]
 

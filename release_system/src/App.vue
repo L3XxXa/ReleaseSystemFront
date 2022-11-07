@@ -7,9 +7,10 @@
 
 <script>
 
+import NavigationMenu from "@/components/navigationMenu/NavigationMenu";
 export default {
   name: 'App',
-  components: {},
+  components: {NavigationMenu},
 
 }
 </script>
