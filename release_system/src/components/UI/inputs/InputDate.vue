@@ -21,7 +21,7 @@ export default {
 .input{
   background-color: #F5F5F5;
   border: none;
-  width: 60%;
+  width: 40%;
   height: 50px;
   border-radius: 10px;
   font-family: Montserrat;

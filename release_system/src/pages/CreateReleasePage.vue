@@ -11,6 +11,7 @@
       <input-field class="input__field" v-model="responsible.body" placeholder="Ответственный за релиз"></input-field>
       <input-field class="input__field" v-model="interested.body" placeholder="Заинтересованные в релизе"></input-field>
       <input-field class="input__field" v-model="link.body" placeholder="Ссылка на задачу"></input-field>
+      <field-with-toggle-button class="input__field"></field-with-toggle-button>
     </div>
   </div>
 
@@ -18,10 +19,8 @@
 
 <script>
 
-import InputField from "@/components/UI/inputs/InputField";
 export default {
   name: "CreateReleasePage",
-  components: {InputField},
   data(){
     return{
       releaseName:{
@@ -56,17 +55,17 @@ export default {
 }
 
 .input__field{
-  margin-left: 10%;
-  margin-bottom: 15px;
+  margin-left: 22%;
+  margin-top: 15px;
 }
 
 .nav__menu {
-  height: 100%; /* 100% Full-height */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
+  overflow-x: hidden;
   float: left;
   width: 17%;
 }
