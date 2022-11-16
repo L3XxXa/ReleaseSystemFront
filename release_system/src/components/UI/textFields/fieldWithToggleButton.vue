@@ -33,8 +33,12 @@ export default {
 
 }
 .active{
-  background-color: #4caf50;
+  background-color: rgba(0, 255, 56, 0.40);
+  color: black;
+}
 
+.active:hover{
+  background-color: #00FF38;
 }
 
 .text {
@@ -53,6 +57,7 @@ export default {
   margin-top: 5px;
   height: 40px;
   font-family: Montserrat;
+  color: black;
   border: none;
   border-radius: 10px;
   padding-left: 10px;
