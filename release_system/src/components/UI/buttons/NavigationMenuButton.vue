@@ -24,4 +24,8 @@ export default {
   border: 0;
 }
 
+.button:hover{
+  background-color: #E1E1E1;
+}
+
 </style>
