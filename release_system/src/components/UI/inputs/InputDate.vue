@@ -28,4 +28,5 @@ export default {
   font-size: 20px;
   padding-left: 15px;
 }
+
 </style>

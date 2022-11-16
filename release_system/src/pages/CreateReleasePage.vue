@@ -8,6 +8,9 @@
       <input-field class="input__field" v-model="releaseName.body" placeholder="Название релиза"></input-field>
       <input-date class=input__field v-model="releaseStartDate.body" placeholder="Дата начала релиза"> </input-date>
       <input-date class=input__field v-model="releaseEndDate.body" placeholder="Дата конца релиза"> </input-date>
+      <input-field class="input__field" v-model="responsible.body" placeholder="Ответственный за релиз"></input-field>
+      <input-field class="input__field" v-model="interested.body" placeholder="Заинтересованные в релизе"></input-field>
+      <input-field class="input__field" v-model="link.body" placeholder="Ссылка на задачу"></input-field>
     </div>
   </div>
 
@@ -15,11 +18,10 @@
 
 <script>
 
-
-import InputDate from "@/components/UI/inputs/InputDate";
+import InputField from "@/components/UI/inputs/InputField";
 export default {
   name: "CreateReleasePage",
-  components: {InputDate},
+  components: {InputField},
   data(){
     return{
       releaseName:{
@@ -30,8 +32,16 @@ export default {
       },
       releaseEndDate:{
         body: ''
+      },
+      responsible:{
+        body: ''
+      },
+      interested:{
+        body: ''
+      },
+      link:{
+        body: ''
       }
-
     }
   }
 }
