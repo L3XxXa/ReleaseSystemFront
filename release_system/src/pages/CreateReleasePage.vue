@@ -12,6 +12,7 @@
       <input-field class="input__field" v-model="interested.body" placeholder="Заинтересованные в релизе"></input-field>
       <input-field class="input__field" v-model="link.body" placeholder="Ссылка на задачу"></input-field>
       <field-with-toggle-button class="input__field"></field-with-toggle-button>
+      <release-button class="create__release__button"></release-button>
     </div>
   </div>
 
@@ -19,8 +20,10 @@
 
 <script>
 
+import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 export default {
   name: "CreateReleasePage",
+  components: {ReleaseButton},
   data(){
     return{
       releaseName:{
@@ -57,6 +60,11 @@ export default {
 .input__field{
   margin-left: 22%;
   margin-top: 15px;
+}
+
+.create__release__button{
+  margin-top: 30px;
+  margin-left: 32%;
 }
 
 .nav__menu {

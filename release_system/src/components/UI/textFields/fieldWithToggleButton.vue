@@ -34,7 +34,6 @@ export default {
 }
 .active{
   background-color: rgba(0, 255, 56, 0.40);
-  color: black;
 }
 
 .active:hover{
