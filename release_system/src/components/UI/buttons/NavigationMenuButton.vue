@@ -15,7 +15,7 @@ export default {
 <style scoped>
 .button{
   display: flex;
-  padding: 15px;
+  padding: 5px;
   background-color: white;
   font-family: "Cairo", Montserrat, serif;
   font-size: 20px;

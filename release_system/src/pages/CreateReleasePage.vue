@@ -68,6 +68,8 @@ export default {
   overflow-x: hidden;
   float: left;
   width: 17%;
+  margin-left: 4px;
+  margin-top: 4px;
 }
 .content{
   float: right;
