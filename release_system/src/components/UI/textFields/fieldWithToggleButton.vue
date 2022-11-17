@@ -34,6 +34,7 @@ export default {
 }
 .active{
   background-color: rgba(0, 255, 56, 0.40);
+  box-shadow: 0 2px 10px rgba(0,0,0, 0.2);
 }
 
 .active:hover{
@@ -62,6 +63,7 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
   width: 110px;
+  box-shadow: 0 2px 10px rgba(0,0,0, 0.2);
 }
 
 </style>

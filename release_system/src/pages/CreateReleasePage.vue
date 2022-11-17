@@ -12,7 +12,7 @@
       <input-field class="input__field" v-model="interested.body" placeholder="Заинтересованные в релизе"></input-field>
       <input-field class="input__field" v-model="link.body" placeholder="Ссылка на задачу"></input-field>
       <field-with-toggle-button class="input__field"></field-with-toggle-button>
-      <release-button class="create__release__button"></release-button>
+      <release-button class="create__release__button" @click="createRelease"></release-button>
     </div>
   </div>
 
@@ -43,9 +43,30 @@ export default {
       },
       link:{
         body: ''
+      },
+      autotests:{
+        body: false
       }
     }
-  }
+  },
+  methods:{
+    createRelease(){
+      alert("Релиз создан " + "\nRelease name: " + this.releaseName.body
+          + "\nRelease start date: " + this.releaseStartDate.body
+          + "\nRelease end date: " + this.releaseEndDate.body
+          + "\nResponsible for release: " + this.responsible.body
+          + "\nInterested in release: " + this.interested.body
+          + "\nLink for task: " + this.link.body
+          + "\nAutotests: " + this.autotests.body )
+      this.releaseName.body = '';
+      this.releaseStartDate.body = '';
+      this.releaseEndDate.body = '';
+      this.responsible.body = '';
+      this.interested.body = '';
+      this.link.body = '';
+    }
+  },
+
 }
 </script>
 
@@ -82,5 +103,6 @@ export default {
 .content{
   float: right;
   width: 83%;
+  margin-top: 30px;
 }
 </style>
