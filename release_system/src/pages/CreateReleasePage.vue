@@ -5,12 +5,14 @@
     </div>
     <div class="content">
       <h1 class="heading">Запланировать релиз</h1>
-      <input-field class="input__field" v-model="releaseName.body" placeholder="Название релиза"></input-field>
-      <input-date class=input__field v-model="releaseStartDate.body" placeholder="Дата начала релиза"> </input-date>
-      <input-date class=input__field v-model="releaseEndDate.body" placeholder="Дата конца релиза"> </input-date>
-      <input-field class="input__field" v-model="responsible.body" placeholder="Ответственный за релиз"></input-field>
-      <input-field class="input__field" v-model="interested.body" placeholder="Заинтересованные в релизе"></input-field>
-      <input-field class="input__field" v-model="link.body" placeholder="Ссылка на задачу"></input-field>
+      <Form>
+        <Field name="release_name" type="string" :rules="validate_name" class="input__field" placeholder="Введите название релиза"/>
+        <ErrorMessage name="release_name"/>
+        <Field name="release_start_date" class="input__field" placeholder="Введите дату начала релиза" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+        <ErrorMessage name="release_start_date"/>
+        <Field name="release_end_date" class="input__field" placeholder="Введите дату конца релиза" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+        <ErrorMessage name="release_end_date"/>
+      </Form>
       <field-with-toggle-button class="input__field"></field-with-toggle-button>
       <release-button class="create__release__button" @click="createRelease"></release-button>
     </div>
@@ -21,9 +23,15 @@
 <script>
 
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
+import {ErrorMessage, Field, Form} from "vee-validate";
 export default {
   name: "CreateReleasePage",
-  components: {ReleaseButton},
+  components: {
+    ReleaseButton,
+    Form,
+    Field,
+    ErrorMessage,
+    },
   data(){
     return{
       releaseName:{
@@ -64,6 +72,18 @@ export default {
       this.responsible.body = '';
       this.interested.body = '';
       this.link.body = '';
+    },
+    validate_name(value){
+      if (!value){
+        return "Введите название релиза"
+      }
+      return true
+    },
+    validate_date_before(value){
+      if (!value){
+        return "Введите дату релиза"
+      }
+      if ()
     }
   },
 
@@ -81,7 +101,16 @@ export default {
 .input__field{
   margin-left: 22%;
   margin-top: 15px;
+  background-color: #F5F5F5;
+  border: none;
+  width: 40%;
+  height: 50px;
+  border-radius: 10px;
+  font-family: Montserrat;
+  font-size: 20px;
+  padding-left: 15px;
 }
+
 
 .create__release__button{
   margin-top: 30px;
