@@ -5,7 +5,7 @@
     </div>
     <div class="content">
       <h1 class="heading">Запланировать релиз</h1>
-      <Form>
+      <Form @submit="submittingForm">
         <Field name="release_name" type="string" :rules="validate_field_not_empty" class="input__field"
                :validateOnBlur="true" placeholder="Название релиза" v-model="release_name"/>
         <ErrorMessage name="release_name"/>
@@ -17,6 +17,9 @@
                onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date" :validateOnBlur="true"
                v-model="release_end_date"/>
         <ErrorMessage name="release_end_date"/>
+        <Field name="version" class="input__field" placeholder="Версия релиза"
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="version"/>
+        <ErrorMessage name="version"/>
         <Field name="responsible" class="input__field" placeholder="Ответственный за релиз"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="responsible"/>
         <ErrorMessage name="responsible"/>
@@ -26,16 +29,16 @@
         <Field name="link" class="input__field" placeholder="Ссылка на задачу"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="link"/>
         <ErrorMessage name="link"/>
-      </Form>
-      <div class="input__field">
-        <div class="toggle__button__field">
-          <p class="autotests__text">Автотесты</p>
-          <button class="button__toggle" :class="{'active':autotests}" @click="toggleButton">
-            {{ autotests ? "Включены" : "Выключены" }}
-          </button>
+        <div class="input__field">
+          <div class="toggle__button__field">
+            <p class="autotests__text">Нужно согласование?</p>
+            <button class="button__toggle" :class="{'active':approve_required}" @click="toggleButton">
+              {{ approve_required ? "Да" : "Нет" }}
+            </button>
+          </div>
         </div>
-      </div>
-      <release-button class="create__release__button" ></release-button>
+        <release-button class="create__release__button"></release-button>
+      </Form>
     </div>
   </div>
 
@@ -45,6 +48,7 @@
 
 import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
+import axios from "axios";
 
 export default {
   name: "CreateReleasePage",
@@ -62,7 +66,8 @@ export default {
       responsible: '',
       interested: '',
       link: '',
-      autotests: false
+      approve_required: false,
+      version: '',
     }
   },
   methods: {
@@ -81,7 +86,7 @@ export default {
       console.log(before)
       console.log(after)
       console.log("date now " + Date.now())
-      if ((before > after && before !== "" && after !== "") || Math.floor(before.getTime()) < Date.now()) {
+      if ((before > after && before !== "" && after !== "") || Math.floor(before.getTime()) + 86400000 < Date.now()) {
         return "Установите правильные даты релиза"
       }
       return true
@@ -92,6 +97,25 @@ export default {
     },
     toggleButton() {
       this.autotests = !this.autotests;
+    },
+
+    async submittingForm() {
+      setTimeout(async () => {
+        const response = await axios.post("http://192.168.13.1/api/plan", {
+          app_name: this.release_name,
+          start_date: this.release_start_date,
+          finish_date: this.release_end_date,
+          ver: this.version,
+          approve_required: this.approve_required,
+          on_duty: this.responsible,
+          followers: this.interested
+        })
+        if (response.status === 200) {
+          alert("Релиз успешно запланирован")
+        } else {
+          alert("Ошибка при создании релиза.\nКод: " + response.status)
+        }
+      })
     }
   },
 
@@ -116,12 +140,12 @@ export default {
   position: relative;
 }
 
-.active{
+.active {
   background-color: rgba(0, 255, 56, 0.40);
-  box-shadow: 0 2px 10px rgba(0,0,0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.active:hover{
+.active:hover {
   background-color: #00FF38;
 }
 
@@ -137,9 +161,8 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
   width: 110px;
-  box-shadow: 0 2px 10px rgba(0,0,0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
-
 
 
 .autotests__text {
