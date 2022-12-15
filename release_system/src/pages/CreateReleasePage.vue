@@ -6,38 +6,46 @@
     <div class="content">
       <h1 class="heading">Запланировать релиз</h1>
       <Form @submit="submittingForm">
-        <Field name="release_name" type="string" :rules="validate_field_not_empty" class="input__field"
-               :validateOnBlur="true" placeholder="Название релиза" v-model="release_name"/>
-        <ErrorMessage name="release_name"/>
-        <Field name="release_start_date" class="input__field" placeholder="Дата начала релиза"
+        <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
+               :validateOnBlur="true" placeholder="Название релиза" v-model="app_name"/>
+        <ErrorMessage name="app_name"/>
+        <Field name="start_date" class="input__field" placeholder="Дата начала релиза"
                onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date"
-               v-model="release_start_date"/>
-        <ErrorMessage name="release_start_date"/>
-        <Field name="release_end_date" class="input__field" placeholder="Дата конца релиза"
+               v-model="start_date"/>
+        <ErrorMessage name="start_date"/>
+        <Field name="finish_date" class="input__field" placeholder="Дата конца релиза"
                onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date" :validateOnBlur="true"
-               v-model="release_end_date"/>
-        <ErrorMessage name="release_end_date"/>
-        <Field name="version" class="input__field" placeholder="Версия релиза"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="version"/>
-        <ErrorMessage name="version"/>
-        <Field name="responsible" class="input__field" placeholder="Ответственный за релиз"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="responsible"/>
-        <ErrorMessage name="responsible"/>
-        <Field name="interested" class="input__field" placeholder="Заинтересованный в релизе"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="interested"/>
-        <ErrorMessage name="interested"/>
-        <Field name="link" class="input__field" placeholder="Ссылка на задачу"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="link"/>
-        <ErrorMessage name="link"/>
+               v-model="finish_date"/>
+        <ErrorMessage name="finish_date"/>
+        <Field name="ver" class="input__field" placeholder="Версия релиза"
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="ver"/>
+        <ErrorMessage name="ver"/>
+        <Field name="on_duty" class="input__field" placeholder="Ответственный за релиз"
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="on_duty"/>
+        <ErrorMessage name="on_duty"/>
+        <Field name="followers" class="input__field" placeholder="Заинтересованный в релизе"
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="followers"/>
+        <ErrorMessage name="followers"/>
+        <Field name="task_link" class="input__field" placeholder="Ссылка на задачу"
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="task_link"/>
+        <ErrorMessage name="task_link"/>
         <div class="input__field">
           <div class="toggle__button__field">
             <p class="autotests__text">Нужно согласование?</p>
-            <button class="button__toggle" :class="{'active':approve_required}" @click="toggleButton">
+            <button type="button" class="button__toggle" :class="{'active':approve_required}" @click="toggleButtonApprove">
               {{ approve_required ? "Да" : "Нет" }}
             </button>
           </div>
         </div>
-        <release-button class="create__release__button"></release-button>
+        <div class="input__field">
+          <div class="toggle__button__field">
+            <p class="autotests__text">Нужны автотесты?</p>
+            <button type="button" class="button__toggle" :class="{'active':auto_tests_required}" @click="toggleButtonAutotests">
+              {{ auto_tests_required ? "Да" : "Нет" }}
+            </button>
+          </div>
+        </div>
+        <release-button class="create__release__button" type="submit"></release-button>
       </Form>
     </div>
   </div>
@@ -50,6 +58,10 @@ import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 import axios from "axios";
 
+const instance = axios.create({
+  baseURL: 'http://localhost:8080/api/v1',
+});
+
 export default {
   name: "CreateReleasePage",
   components: {
@@ -60,14 +72,15 @@ export default {
   },
   data() {
     return {
-      release_name: '',
-      release_start_date: '',
-      release_end_date: '',
-      responsible: '',
-      interested: '',
-      link: '',
+      app_name: '',
+      start_date: '',
+      finish_date: '',
+      on_duty: '',
+      followers: '',
+      task_link: '',
       approve_required: false,
-      version: '',
+      auto_tests_required: false,
+      ver: '',
     }
   },
   methods: {
@@ -81,8 +94,8 @@ export default {
       if (!value) {
         return "Обязательное поле"
       }
-      const before = this.parseDate(this.release_start_date)
-      const after = this.parseDate(this.release_end_date)
+      const before = this.parseDate(this.start_date)
+      const after = this.parseDate(this.finish_date)
       console.log(before)
       console.log(after)
       console.log("date now " + Date.now())
@@ -95,28 +108,29 @@ export default {
       const [year, month, day] = value.split('-');
       return new Date(+year, month - 1, +day);
     },
-    toggleButton() {
-      this.autotests = !this.autotests;
+    toggleButtonApprove() {
+      this.approve_required = !this.approve_required;
     },
-
-    async submittingForm() {
-      setTimeout(async () => {
-        const response = await axios.post("http://192.168.13.1/api/plan", {
-          app_name: this.release_name,
-          start_date: this.release_start_date,
-          finish_date: this.release_end_date,
-          ver: this.version,
-          approve_required: this.approve_required,
-          on_duty: this.responsible,
-          followers: this.interested
+    toggleButtonAutotests() {
+      this.auto_tests_required = !this.auto_tests_required;
+    },
+    submittingForm() {
+        instance.post('/plan',{
+            app_name: this.app_name,
+            task_link: this.task_link,
+            start_date: this.start_date,
+            finish_date: this.finish_date,
+            ver: this.ver,
+            auto_tests_required: this.auto_tests_required,
+            approve_required: this.approve_required,
+            on_duty: this.on_duty,
+            followers: this.followers
+        }).then(function(response){
+          alert(response);
+        }).catch(function (error){
+          alert(error);
         })
-        if (response.status === 200) {
-          alert("Релиз успешно запланирован")
-        } else {
-          alert("Ошибка при создании релиза.\nКод: " + response.status)
-        }
-      })
-    }
+    },
   },
 
 }
@@ -168,7 +182,6 @@ export default {
 .autotests__text {
   font-family: Montserrat;
   font-size: 20px;
-  margin-left: 15px;
   margin-top: 13px;
   float: left;
   position: absolute;
