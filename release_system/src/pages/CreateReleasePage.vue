@@ -58,10 +58,6 @@ import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: 'http://localhost:8080/api/v1',
-});
-
 export default {
   name: "CreateReleasePage",
   components: {
@@ -114,20 +110,40 @@ export default {
     toggleButtonAutotests() {
       this.auto_tests_required = !this.auto_tests_required;
     },
+    validURL(str) {
+      if (!str) {
+        return "Обязательное поле"
+      }
+      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+
+      if (!pattern.test(str)) {
+        return "Введите правильный формат ссылки"
+      } 
+      return true
+    },
     submittingForm() {
-        instance.post('/plan',{
-            app_name: this.app_name,
-            task_link: this.task_link,
-            start_date: this.start_date,
-            finish_date: this.finish_date,
-            ver: this.ver,
-            auto_tests_required: this.auto_tests_required,
-            approve_required: this.approve_required,
-            on_duty: this.on_duty,
-            followers: this.followers
+      var request = { 
+        "app_name": "test", 
+        "task_link": "asdf", 
+        "start_date":  "2023-10-13T16:39:17.0339226+07:00", 
+        "finish_date": "2024-01-02T17:04:05.0339226+07:00", 
+        "ver": "0.8", 
+        "auto_tests_required": false, 
+        "approve_required": false, 
+        "on_duty": "a.sartakov1", 
+        "followers": ["a.sartakov1"] 
+      }
+        axios.options('http://localhost:8080/api/v1/plan',{
+            request
         }).then(function(response){
           alert(response);
         }).catch(function (error){
+          console.log(typeof(request))
           alert(error);
         })
     },
