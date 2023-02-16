@@ -8,27 +8,27 @@
       <Form @submit="submittingForm">
         <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
                :validateOnBlur="true" placeholder="Название релиза" v-model="app_name"/>
-        <ErrorMessage name="app_name"/>
+        <ErrorMessage name="app_name" class="error__message"/>
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза"
                onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date"
                v-model="start_date"/>
-        <ErrorMessage name="start_date"/>
+        <ErrorMessage name="start_date" class="error__message"/>
         <Field name="finish_date" class="input__field" placeholder="Дата конца релиза"
                onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date" :validateOnBlur="true"
                v-model="finish_date"/>
-        <ErrorMessage name="finish_date"/>
+        <ErrorMessage name="finish_date" class="error__message"/>
         <Field name="ver" class="input__field" placeholder="Версия релиза"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="ver"/>
-        <ErrorMessage name="ver"/>
+        <ErrorMessage name="ver" class="error__message"/>
         <Field name="on_duty" class="input__field" placeholder="Ответственный за релиз"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="on_duty"/>
-        <ErrorMessage name="on_duty"/>
+        <ErrorMessage name="on_duty" class="error__message"/>
         <Field name="followers" class="input__field" placeholder="Заинтересованный в релизе"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="followers"/>
-        <ErrorMessage name="followers"/>
+        <ErrorMessage name="followers" class="error__message"/>
         <Field name="task_link" class="input__field" placeholder="Ссылка на задачу"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="task_link"/>
-        <ErrorMessage name="task_link"/>
+        <ErrorMessage name="task_link" class="error__message"/>
         <div class="input__field">
           <div class="toggle__button__field">
             <p class="autotests__text">Нужно согласование?</p>
@@ -127,23 +127,10 @@ export default {
       return true
     },
     submittingForm() {
-      var request = { 
-        "app_name": "test", 
-        "task_link": "asdf", 
-        "start_date":  "2023-10-13T16:39:17.0339226+07:00", 
-        "finish_date": "2024-01-02T17:04:05.0339226+07:00", 
-        "ver": "0.8", 
-        "auto_tests_required": false, 
-        "approve_required": false, 
-        "on_duty": "a.sartakov1", 
-        "followers": ["a.sartakov1"] 
-      }
         axios.options('http://localhost:8080/api/v1/plan',{
-            request
         }).then(function(response){
           alert(response);
         }).catch(function (error){
-          console.log(typeof(request))
           alert(error);
         })
     },
@@ -158,6 +145,13 @@ export default {
   font-weight: normal;
   margin-left: 30%;
 
+}
+
+.error__message{
+  color: red;
+  font-family: Montserrat;
+  font-size: 20px;
+  margin-left: 15px;
 }
 
 .toggle__button__field {
@@ -193,7 +187,6 @@ export default {
   width: 110px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
-
 
 .autotests__text {
   font-family: Montserrat;
