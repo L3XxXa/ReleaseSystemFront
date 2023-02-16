@@ -10,11 +10,11 @@
                :validateOnBlur="true" placeholder="Название релиза" v-model="app_name"/>
         <ErrorMessage name="app_name" class="error__message"/>
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза"
-               onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date"
+               onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
                v-model="start_date"/>
         <ErrorMessage name="start_date" class="error__message"/>
         <Field name="finish_date" class="input__field" placeholder="Дата конца релиза"
-               onfocus="(this.type='date')" onblur="(this.type='text')" :rules="validate_date" :validateOnBlur="true"
+               onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date" :validateOnBlur="true"
                v-model="finish_date"/>
         <ErrorMessage name="finish_date" class="error__message"/>
         <Field name="ver" class="input__field" placeholder="Версия релиза"
@@ -82,6 +82,7 @@ export default {
   methods: {
     validate_field_not_empty(value) {
       if (!value) {
+        console.log(value)
         return "Обязательное поле"
       }
       return true
