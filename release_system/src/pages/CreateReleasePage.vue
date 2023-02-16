@@ -1,3 +1,4 @@
+ve
 <template>
   <div>
     <div class="nav__menu">
@@ -6,28 +7,33 @@
     <div class="content">
       <h1 class="heading">Запланировать релиз</h1>
       <Form @submit="submittingForm">
-        <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field" @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
+        <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
+               @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
                placeholder="Название релиза" v-model="app_name"/>
         <ErrorMessage name="app_name" class="error__message"/>
-        <Field name="start_date" class="input__field" placeholder="Дата начала релиза"
+        <Field name="start_date" class="input__field" placeholder="Дата начала релиза"                @blur="checkInput('start_date')" :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
                v-model="start_date"/>
         <ErrorMessage name="start_date" class="error__message"/>
-        <Field name="finish_date" class="input__field" placeholder="Дата конца релиза"
+        <Field name="finish_date" class="input__field" placeholder="Дата конца релиза"  @blur="checkInput('finish_date')" :class="{'error__field' : empty_end_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date" :validateOnBlur="true"
                v-model="finish_date"/>
         <ErrorMessage name="finish_date" class="error__message"/>
-        <Field name="ver" class="input__field" placeholder="Версия релиза"
+        <Field name="ver" class="input__field" placeholder="Версия релиза" @blur="checkInput('ver')"
+               :class="{'error__field' : empty_ver}"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="ver"/>
         <ErrorMessage name="ver" class="error__message"/>
         <Field name="on_duty" class="input__field" placeholder="Ответственный за релиз"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="on_duty"/>
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="on_duty" @blur="checkInput('on_duty')"
+               :class="{'error__field' : empty_on_duty}"/>
         <ErrorMessage name="on_duty" class="error__message"/>
         <Field name="followers" class="input__field" placeholder="Заинтересованный в релизе"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="followers"/>
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="followers"
+               @blur="checkInput('followers')" :class="{'error__field' : empty_followers}"/>
         <ErrorMessage name="followers" class="error__message"/>
         <Field name="task_link" class="input__field" placeholder="Ссылка на задачу"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="task_link"/>
+               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="task_link"
+               @blur="checkInput('task_link')" :class="{'error__field' : empty_task_link}"/>
         <ErrorMessage name="task_link" class="error__message"/>
         <div class="input__field">
           <div class="toggle__button__field">
@@ -111,7 +117,7 @@ export default {
           this.empty_followers = true
           break
         case "task_link":
-          this.task_link = true
+          this.empty_task_link = true
           break
       }
     },
@@ -126,12 +132,6 @@ export default {
         case "ver":
           this.empty_ver = false
           break
-        case "start_date":
-          this.empty_start_date = false
-          break
-        case "finish_date":
-          this.empty_end_date = false
-          break
         case "on_duty":
           this.empty_on_duty = false
           break
@@ -144,7 +144,7 @@ export default {
       }
       return true
     },
-    validate_date(value) {
+    validate_date(value, field) {
       if (!value) {
         return "Обязательное поле"
       }
@@ -152,6 +152,15 @@ export default {
       const after = this.parseDate(this.finish_date)
       if ((before > after && before !== "" && after !== "") || Math.floor(before.getTime()) + 86400000 < Date.now()) {
         return "Установите правильные даты релиза"
+      }
+      console.log(field)
+      switch (field.field) {
+        case "start_date":
+          this.empty_start_date = false
+          break
+        case "finish_date":
+          this.empty_end_date = false
+          break
       }
       return true
     },
@@ -202,7 +211,7 @@ export default {
 }
 
 .error__field {
-  border: solid red 2px;
+  border: solid red 2px !important;
   color: red;
 }
 
