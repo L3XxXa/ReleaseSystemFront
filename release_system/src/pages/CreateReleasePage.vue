@@ -6,8 +6,8 @@
     <div class="content">
       <h1 class="heading">Запланировать релиз</h1>
       <Form @submit="submittingForm">
-        <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
-               :validateOnBlur="true" placeholder="Название релиза" v-model="app_name"/>
+        <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field" @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
+               placeholder="Название релиза" v-model="app_name"/>
         <ErrorMessage name="app_name" class="error__message"/>
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
@@ -32,7 +32,8 @@
         <div class="input__field">
           <div class="toggle__button__field">
             <p class="autotests__text">Нужно согласование?</p>
-            <button type="button" class="button__toggle" :class="{'active':approve_required}" @click="toggleButtonApprove">
+            <button type="button" class="button__toggle" :class="{'active':approve_required}"
+                    @click="toggleButtonApprove">
               {{ approve_required ? "Да" : "Нет" }}
             </button>
           </div>
@@ -40,7 +41,8 @@
         <div class="input__field">
           <div class="toggle__button__field">
             <p class="autotests__text">Нужны автотесты?</p>
-            <button type="button" class="button__toggle" :class="{'active':auto_tests_required}" @click="toggleButtonAutotests">
+            <button type="button" class="button__toggle" :class="{'active':auto_tests_required}"
+                    @click="toggleButtonAutotests">
               {{ auto_tests_required ? "Да" : "Нет" }}
             </button>
           </div>
@@ -59,6 +61,7 @@ import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 import axios from "axios";
 
 export default {
+
   name: "CreateReleasePage",
   components: {
     Form,
@@ -77,13 +80,67 @@ export default {
       approve_required: false,
       auto_tests_required: false,
       ver: '',
+      empty_app_name: false,
+      empty_start_date: false,
+      empty_end_date: false,
+      empty_on_duty: false,
+      empty_followers: false,
+      empty_task_link: false,
+      empty_ver: false
     }
   },
   methods: {
-    validate_field_not_empty(value) {
+    checkInput(event) {
+      switch (event) {
+        case "app_name":
+          this.empty_app_name = true
+          break
+        case "ver":
+          this.empty_ver = true
+          break
+        case "start_date":
+          this.empty_start_date = true
+          break
+        case "finish_date":
+          this.empty_end_date = true
+          break
+        case "on_duty":
+          this.empty_on_duty = true
+          break
+        case "followers":
+          this.empty_followers = true
+          break
+        case "task_link":
+          this.task_link = true
+          break
+      }
+    },
+    validate_field_not_empty(value, field) {
       if (!value) {
-        console.log(value)
         return "Обязательное поле"
+      }
+      switch (field.field) {
+        case "app_name":
+          this.empty_app_name = false
+          break
+        case "ver":
+          this.empty_ver = false
+          break
+        case "start_date":
+          this.empty_start_date = false
+          break
+        case "finish_date":
+          this.empty_end_date = false
+          break
+        case "on_duty":
+          this.empty_on_duty = false
+          break
+        case "followers":
+          this.empty_followers = false
+          break
+        case "task_link":
+          this.task_link = false
+          break
       }
       return true
     },
@@ -93,9 +150,6 @@ export default {
       }
       const before = this.parseDate(this.start_date)
       const after = this.parseDate(this.finish_date)
-      console.log(before)
-      console.log(after)
-      console.log("date now " + Date.now())
       if ((before > after && before !== "" && after !== "") || Math.floor(before.getTime()) + 86400000 < Date.now()) {
         return "Установите правильные даты релиза"
       }
@@ -115,25 +169,24 @@ export default {
       if (!str) {
         return "Обязательное поле"
       }
-      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+      const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+          '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+          '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+          '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
 
       if (!pattern.test(str)) {
         return "Введите правильный формат ссылки"
-      } 
+      }
       return true
     },
     submittingForm() {
-        axios.options('http://localhost:8080/api/v1/plan',{
-        }).then(function(response){
-          alert(response);
-        }).catch(function (error){
-          alert(error);
-        })
+      axios.options('http://localhost:8080/api/v1/plan', {}).then(function (response) {
+        alert(response);
+      }).catch(function (error) {
+        alert(error);
+      })
     },
   },
 
@@ -148,7 +201,12 @@ export default {
 
 }
 
-.error__message{
+.error__field {
+  border: solid red 2px;
+  color: red;
+}
+
+.error__message {
   color: red;
   font-family: Montserrat;
   font-size: 20px;
@@ -199,10 +257,10 @@ export default {
 }
 
 .input__field {
+  border: none;
   margin-left: 22%;
   margin-top: 15px;
   background-color: #F5F5F5;
-  border: none;
   width: 40%;
   height: 50px;
   border-radius: 10px;
