@@ -53,7 +53,7 @@ ve
             </button>
           </div>
         </div>
-        <release-button class="create__release__button" type="submit"></release-button>
+        <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
       </Form>
     </div>
   </div>
@@ -121,6 +121,7 @@ export default {
           break
       }
     },
+
     validate_field_not_empty(value, field) {
       if (!value) {
         return "Обязательное поле"
@@ -139,11 +140,12 @@ export default {
           this.empty_followers = false
           break
         case "task_link":
-          this.task_link = false
+          this.empty_task_link = false
           break
       }
       return true
     },
+
     validate_date(value, field) {
       if (!value) {
         return "Обязательное поле"
@@ -164,16 +166,44 @@ export default {
       }
       return true
     },
+
     parseDate(value) {
       const [year, month, day] = value.split('-');
       return new Date(+year, month - 1, +day);
     },
+
     toggleButtonApprove() {
       this.approve_required = !this.approve_required;
     },
+
     toggleButtonAutotests() {
       this.auto_tests_required = !this.auto_tests_required;
     },
+
+    checkFields(){
+      if (this.app_name === ""){
+        this.empty_app_name = true;
+      }
+      if (this.ver === ""){
+        this.empty_ver = true;
+      }
+      if (this.start_date === ""){
+        this.empty_start_date = true;
+      }
+      if (this.finish_date === ""){
+        this.empty_end_date = true;
+      }
+      if (this.on_duty === ""){
+        this.empty_on_duty = true;
+      }
+      if (this.followers === ""){
+        this.empty_followers = true;
+      }
+      if (this.task_link === ""){
+        this.empty_task_link = true;
+      }
+    },
+
     validURL(str) {
       if (!str) {
         return "Обязательное поле"
@@ -190,6 +220,7 @@ export default {
       }
       return true
     },
+
     submittingForm() {
       axios.options('http://localhost:8080/api/v1/plan', {}).then(function (response) {
         alert(response);
@@ -266,9 +297,9 @@ export default {
 }
 
 .input__field {
-  border: none;
   margin-left: 22%;
   margin-top: 15px;
+  border: solid #F5F5F5 2px;
   background-color: #F5F5F5;
   width: 40%;
   height: 50px;
