@@ -66,6 +66,7 @@ ve
 
 import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
+import App from "@/App";
 import axios from "axios";
 
 export default {
@@ -157,7 +158,6 @@ export default {
       if ((before > after && before !== "" && after !== "") || Math.floor(before.getTime()) + 86400000 < Date.now()) {
         return "Установите правильные даты релиза"
       }
-      console.log(field)
       switch (field.field) {
         case "start_date":
           this.empty_start_date = false
@@ -224,12 +224,12 @@ export default {
       return true
     },
 
-    submittingForm() {
-      axios.options('http://localhost:8080/api/v1/plan', {}).then(function (response) {
-        alert(response);
-      }).catch(function (error) {
-        alert(error);
-      })
+    async submittingForm() {
+      const url = new URL(App.data().link)
+      url.pathname = "posts"
+      console.log(url.href)
+      const response = await axios.get(url.href)
+      console.log(response)
     },
   },
 

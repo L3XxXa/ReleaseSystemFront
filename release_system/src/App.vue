@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-
     <router-view></router-view>
   </div>
 </template>
@@ -10,7 +9,11 @@
 
 export default {
   name: 'App',
-
+  data() {
+    return {
+      link: 'https://jsonplaceholder.typicode.com/' // Поменять ссыль на нужную
+    }
+  }
 }
 </script>
 
