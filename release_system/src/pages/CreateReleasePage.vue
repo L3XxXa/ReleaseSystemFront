@@ -212,9 +212,8 @@ export default {
       }
       try {
         const urlToCheck = new URL(str)
-        console.log(urlToCheck.pathname)
-        const patternOfPathname = new RegExp('\\/browse\\/', 'i')
-        if (!patternOfPathname.test(str)){
+        const patternOfPathname = new RegExp('\\/browse\\/[a-z]+-+[1-9]+', 'i')
+        if (!patternOfPathname.test(urlToCheck.pathname)){
           return "Не правильный формат ссылки"
         }
       }
