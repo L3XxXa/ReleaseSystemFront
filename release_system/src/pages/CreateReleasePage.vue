@@ -11,11 +11,13 @@ ve
                @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
                placeholder="Название релиза" v-model="app_name"/>
         <ErrorMessage name="app_name" class="error__message"/>
-        <Field name="start_date" class="input__field" placeholder="Дата начала релиза"                @blur="checkInput('start_date')" :class="{'error__field' : empty_start_date}"
+        <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
+               :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
                v-model="start_date"/>
         <ErrorMessage name="start_date" class="error__message"/>
-        <Field name="finish_date" class="input__field" placeholder="Дата конца релиза"  @blur="checkInput('finish_date')" :class="{'error__field' : empty_end_date}"
+        <Field name="finish_date" class="input__field" placeholder="Дата конца релиза" @blur="checkInput('finish_date')"
+               :class="{'error__field' : empty_end_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date" :validateOnBlur="true"
                v-model="finish_date"/>
         <ErrorMessage name="finish_date" class="error__message"/>
@@ -32,7 +34,7 @@ ve
                @blur="checkInput('followers')" :class="{'error__field' : empty_followers}"/>
         <ErrorMessage name="followers" class="error__message"/>
         <Field name="task_link" class="input__field" placeholder="Ссылка на задачу"
-               :rules="validate_field_not_empty" :validateOnBlur="true" v-model="task_link"
+               :rules="validURL" :validateOnBlur="true" v-model="task_link"
                @blur="checkInput('task_link')" :class="{'error__field' : empty_task_link}"/>
         <ErrorMessage name="task_link" class="error__message"/>
         <div class="input__field">
@@ -180,26 +182,26 @@ export default {
       this.auto_tests_required = !this.auto_tests_required;
     },
 
-    checkFields(){
-      if (this.app_name === ""){
+    checkFields() {
+      if (this.app_name === "") {
         this.empty_app_name = true;
       }
-      if (this.ver === ""){
+      if (this.ver === "") {
         this.empty_ver = true;
       }
-      if (this.start_date === ""){
+      if (this.start_date === "") {
         this.empty_start_date = true;
       }
-      if (this.finish_date === ""){
+      if (this.finish_date === "") {
         this.empty_end_date = true;
       }
-      if (this.on_duty === ""){
+      if (this.on_duty === "") {
         this.empty_on_duty = true;
       }
-      if (this.followers === ""){
+      if (this.followers === "") {
         this.empty_followers = true;
       }
-      if (this.task_link === ""){
+      if (this.task_link === "") {
         this.empty_task_link = true;
       }
     },
@@ -208,16 +210,18 @@ export default {
       if (!str) {
         return "Обязательное поле"
       }
-      const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-          '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-          '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-          '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-
-      if (!pattern.test(str)) {
-        return "Введите правильный формат ссылки"
+      try {
+        const urlToCheck = new URL(str)
+        console.log(urlToCheck.pathname)
+        const patternOfPathname = new RegExp('\\/browse\\/', 'i')
+        if (!patternOfPathname.test(str)){
+          return "Не правильный формат ссылки"
+        }
       }
+      catch (err){
+        return "Не является ссылкой"
+      }
+      this.empty_task_link = false;
       return true
     },
 
