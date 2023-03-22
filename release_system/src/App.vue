@@ -11,7 +11,7 @@ export default {
   name: 'App',
   data() {
     return {
-      link: 'https://jsonplaceholder.typicode.com/' // Поменять ссыль на нужную
+      link: 'localhost:8080' // Поменять ссыль на нужную
     }
   }
 }

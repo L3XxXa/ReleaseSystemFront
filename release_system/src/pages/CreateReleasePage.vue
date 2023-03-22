@@ -10,7 +10,10 @@ ve
         <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
                @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
                placeholder="Название релиза" v-model="app_name"/>
+
         <ErrorMessage name="app_name" class="error__message"/>
+
+
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
                :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
@@ -155,7 +158,7 @@ export default {
       }
       const before = this.parseDate(this.start_date)
       const after = this.parseDate(this.finish_date)
-      if ((before > after && before !== "" && after !== "") || Math.floor(before.getTime()) + 86400000 < Date.now()) {
+      if ((before > after && this.start_date !== "" && this.finish_date !== "") || Math.floor(before.getTime()) + 86400000 < Date.now()) {
         return "Установите правильные даты релиза"
       }
       switch (field.field) {
@@ -174,6 +177,9 @@ export default {
       return new Date(+year, month - 1, +day);
     },
 
+    normalizeDate(value) {
+      return value += "T00:00:00.0339226+07:00"
+    },
     toggleButtonApprove() {
       this.approve_required = !this.approve_required;
     },
@@ -213,23 +219,66 @@ export default {
       try {
         const urlToCheck = new URL(str)
         const patternOfPathname = new RegExp('\\/browse\\/[a-z]+-+[1-9]+', 'i')
-        if (!patternOfPathname.test(urlToCheck.pathname)){
+        if (!patternOfPathname.test(urlToCheck.pathname)) {
           return "Не правильный формат ссылки"
         }
-      }
-      catch (err){
+      } catch (err) {
         return "Не является ссылкой"
       }
       this.empty_task_link = false;
       return true
     },
 
+    unsetData(){
+      this.app_name = ""
+      this.task_link = ""
+      this.start_date = ""
+      this.finish_date = ""
+      this.ver = ""
+      this.auto_tests_required = false
+      this.approve_required = false
+      this.on_duty = ""
+      this.followers = ""
+    },
+
+    parseFollowers(followers) {
+      if (followers.includes(",")) {
+        return followers.split(",")
+      } else if (followers.includes(" ")) {
+        return followers.split(" ")
+      } else if (followers.includes(", ")) {
+        return followers.split(", ")
+      } else {
+        return followers.split()
+      }
+    },
+
     async submittingForm() {
       const url = new URL(App.data().link)
       url.pathname = "posts"
-      console.log(url.href)
-      const response = await axios.get(url.href)
-      console.log(response)
+      const parsedFollowers = this.parseFollowers(this.followers)
+      const normalizedStartDate = this.normalizeDate(this.start_date)
+      const normalizedFinishDate = this.normalizeDate(this.finish_date)
+      const data = {
+        app_name: this.app_name,
+        task_link: this.task_link,
+        start_date: normalizedStartDate,
+        finish_date: normalizedFinishDate,
+        ver: this.ver,
+        auto_tests_required: this.auto_tests_required,
+        on_duty: this.on_duty,
+        followers: parsedFollowers
+      }
+      console.log(normalizedStartDate)
+      console.log(normalizedFinishDate)
+      await axios.post(url.href, data)
+          .then(response => {
+            console.log(response.data)
+            this.unsetData()
+          })
+          .catch(error => {
+            console.log(error)
+          })
     },
   },
 
