@@ -26,15 +26,11 @@ export default {
     async getData() {
       const url = new URL(App.data().link)
       url.pathname = "api/v1/releases"
-      await axios.get(url.href)
-          .then(response => {
-            console.log("SUCCESSFUL")
-            console.log(response.data.Message)
-          })
-          .catch(error => {
-            console.log("UNSUCCESSFUL")
-            console.log(error)
-          })
+      await axios.get(url.href).then(response => {
+        console.log(response.data.Message[0])
+      }).catch(error => {
+        console.log(error)
+      })
     },
 
   },

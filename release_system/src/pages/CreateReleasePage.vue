@@ -281,9 +281,11 @@ export default {
         data: data
       }).then(response => {
         console.log(response.data)
+        alert("Релиз успешно создан!")
         this.unsetData()
       }).catch(error => {
         console.log(error)
+        alert("Ошибка. " + error.Message)
       })
 
     },
