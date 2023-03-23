@@ -13,7 +13,6 @@ ve
 
         <ErrorMessage name="app_name" class="error__message"/>
 
-
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
                :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
@@ -229,7 +228,7 @@ export default {
       return true
     },
 
-    unsetData(){
+    unsetData() {
       this.app_name = ""
       this.task_link = ""
       this.start_date = ""
@@ -255,7 +254,7 @@ export default {
 
     async submittingForm() {
       const url = new URL(App.data().link)
-      url.pathname = "posts"
+      url.pathname = "api/v1/plan"
       const parsedFollowers = this.parseFollowers(this.followers)
       const normalizedStartDate = this.normalizeDate(this.start_date)
       const normalizedFinishDate = this.normalizeDate(this.finish_date)
@@ -266,19 +265,27 @@ export default {
         finish_date: normalizedFinishDate,
         ver: this.ver,
         auto_tests_required: this.auto_tests_required,
+        approve_required: this.approve_required,
         on_duty: this.on_duty,
         followers: parsedFollowers
       }
       console.log(normalizedStartDate)
       console.log(normalizedFinishDate)
-      await axios.post(url.href, data)
-          .then(response => {
-            console.log(response.data)
-            this.unsetData()
-          })
-          .catch(error => {
-            console.log(error)
-          })
+      console.log(data)
+      axios({
+        method: 'post',
+        url: url.href,
+        headers: {
+          'Content-Type': 'application/json',
+          },
+        data: data
+      }).then(response => {
+        console.log(response.data)
+        this.unsetData()
+      }).catch(error => {
+        console.log(error)
+      })
+
     },
   },
 

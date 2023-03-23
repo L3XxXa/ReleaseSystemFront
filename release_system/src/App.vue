@@ -11,7 +11,7 @@ export default {
   name: 'App',
   data() {
     return {
-      link: 'localhost:8080' // Поменять ссыль на нужную
+      link: 'http://localhost:8080' // Поменять ссыль на нужную
     }
   }
 }
