@@ -265,11 +265,11 @@ export default {
         on_duty: this.on_duty,
         followers: parsedFollowers
       }
-      let returnedData
+      let response
       await (async () => {
-        returnedData = await api.methods.planRelease(data)
+        response = await api.methods.planRelease(data)
       })()
-      if (returnedData.status === 200){
+      if (response.status === 200){
         alert("Релиз успешно запланирован")
         this.unsetData()
       }

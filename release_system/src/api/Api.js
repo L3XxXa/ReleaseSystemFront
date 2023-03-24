@@ -41,7 +41,24 @@ export default {
                     returnData = error
                 })
             )
-
+            return returnData
+        },
+        async deleteRelease(data){
+            const url = new URL(App.data().link)
+            url.pathname = "api/v1/cancel"
+            let returnData
+            setTimeout(await axios({
+                method: 'patch',
+                url: url.href,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: data
+            }).then(response => {
+                returnData = response
+            }).catch(error => {
+                returnData = error
+            }))
             return returnData
         }
     }

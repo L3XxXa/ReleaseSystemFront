@@ -29,13 +29,13 @@ export default {
     async getData() {
       const url = new URL(App.data().link)
       url.pathname = "api/v1/releases"
-      let responseData
+      let response
       await (async () => {
-        responseData = await api.methods.getReleases()
+        response = await api.methods.getReleases()
       })()
-      console.log(responseData)
-      if (responseData.status === 200) {
-        this.releases = [...this.releases, ...responseData.data.Message]
+      console.log(response)
+      if (response.status === 200) {
+        this.releases = [...this.releases, ...response.data.Message]
       }
       else {
         alert("Ошибка")
