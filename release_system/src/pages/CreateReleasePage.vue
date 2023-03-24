@@ -68,9 +68,7 @@ ve
 
 import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
-import App from "@/App";
-import axios from "axios";
-
+import api from "@/api/Api";
 export default {
 
   name: "CreateReleasePage",
@@ -219,7 +217,7 @@ export default {
         const urlToCheck = new URL(str)
         const patternOfPathname = new RegExp('\\/browse\\/[a-z]+-+[1-9]+', 'i')
         if (!patternOfPathname.test(urlToCheck.pathname)) {
-          return "Не правильный формат ссылки"
+          return "Неправильный формат ссылки"
         }
       } catch (err) {
         return "Не является ссылкой"
@@ -253,8 +251,6 @@ export default {
     },
 
     async submittingForm() {
-      const url = new URL(App.data().link)
-      url.pathname = "api/v1/plan"
       const parsedFollowers = this.parseFollowers(this.followers)
       const normalizedStartDate = this.normalizeDate(this.start_date)
       const normalizedFinishDate = this.normalizeDate(this.finish_date)
@@ -269,25 +265,17 @@ export default {
         on_duty: this.on_duty,
         followers: parsedFollowers
       }
-      console.log(normalizedStartDate)
-      console.log(normalizedFinishDate)
-      console.log(data)
-      axios({
-        method: 'post',
-        url: url.href,
-        headers: {
-          'Content-Type': 'application/json',
-          },
-        data: data
-      }).then(response => {
-        console.log(response.data)
-        alert("Релиз успешно создан!")
+      let returnedData
+      await (async () => {
+        returnedData = await api.methods.planRelease(data)
+      })()
+      if (returnedData.status === 200){
+        alert("Релиз успешно запланирован")
         this.unsetData()
-      }).catch(error => {
-        console.log(error)
-        alert("Ошибка. " + error.Message)
-      })
-
+      }
+      else {
+        alert("Ошибка")
+      }
     },
   },
 

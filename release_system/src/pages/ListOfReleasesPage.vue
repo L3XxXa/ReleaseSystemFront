@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import App from "@/App.vue";
-import CardsList from "@/components/UI/cards_list/CardsList";
+import CardsList from "@/components/UI/cardsList/CardsList";
+import api from "@/api/Api";
 
 export default {
   name: "ListOfReleasesPage",
@@ -29,12 +29,17 @@ export default {
     async getData() {
       const url = new URL(App.data().link)
       url.pathname = "api/v1/releases"
-      setTimeout(async () => axios.get(url.href).then(response => {
-        console.log(response.data.Message[0])
-        this.releases = [...this.releases, ...response.data.Message]
-      }).catch(error => {
-        console.log(error)
-      }))
+      let responseData
+      await (async () => {
+        responseData = await api.methods.getReleases()
+      })()
+      console.log(responseData)
+      if (responseData.status === 200) {
+        this.releases = [...this.releases, ...responseData.data.Message]
+      }
+      else {
+        alert("Ошибка")
+      }
     },
   },
   mounted() {

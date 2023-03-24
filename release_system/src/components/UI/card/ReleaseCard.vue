@@ -18,6 +18,7 @@ import DeleteReleaseButton from "@/components/UI/buttons/DeleteReleaseButton";
 import axios from "axios";
 import App from "@/App";
 
+
 export default {
   name: "ReleaseCard",
   components: {DeleteReleaseButton},
@@ -66,6 +67,7 @@ export default {
         console.log(error)
         alert("Ошибка. " + error.Message)
       })
+
     }
   },
   mounted() {
