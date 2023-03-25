@@ -10,9 +10,7 @@ ve
         <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
                @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
                placeholder="Название релиза" v-model="app_name"/>
-
         <ErrorMessage name="app_name" class="error__message"/>
-
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
                :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
@@ -59,7 +57,7 @@ ve
         </div>
         <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
       </Form>
-      <popup-window>{{pop_up_text}}</popup-window>
+      <popup-window id="popup_window" class="popup__window">{{ pop_up_text }}</popup-window>
     </div>
   </div>
 
@@ -71,6 +69,7 @@ import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 import api from "@/api/Api";
 import PopupWindow from "@/components/UI/popup/PopupWindow";
+
 export default {
 
   name: "CreateReleasePage",
@@ -99,7 +98,8 @@ export default {
       empty_followers: false,
       empty_task_link: false,
       empty_ver: false,
-      pop_up_text: ''
+      pop_up_text: '',
+      pop_up_visible: false
     }
   },
   methods: {
@@ -253,7 +253,13 @@ export default {
         return followers.split()
       }
     },
-
+    openPopup() {
+      document.getElementById("popup_window").style.display = "block"
+      setTimeout(this.closePopup, 5000)
+    },
+    closePopup() {
+      document.getElementById("popup_window").style.display = "none"
+    },
     async submittingForm() {
       const parsedFollowers = this.parseFollowers(this.followers)
       const normalizedStartDate = this.normalizeDate(this.start_date)
@@ -273,13 +279,17 @@ export default {
       await (async () => {
         response = await api.methods.planRelease(data)
       })()
-      if (response.status === 200){
+      if (response.status === 200) {
         this.pop_up_text = "Релиз успешно запланирован"
+        this.openPopup()
         this.unsetData()
-      }
-      else {
+      } else {
         console.log(response.message)
-        alert("Ошибка")
+        if (response.status >= 500) {
+          this.pop_up_text = "Внутренняя ошибка на сервере"
+        } else {
+          this.pop_up_text = response.message
+        }
       }
     },
   },
@@ -291,7 +301,7 @@ export default {
 .heading {
   font-family: Montserrat;
   font-weight: normal;
-  margin-left: 30%;
+  margin-left: 28%;
 
 }
 
@@ -307,6 +317,26 @@ export default {
   margin-left: 15px;
 }
 
+.popup__window {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 20px;
+  opacity: 0;
+  animation: fadein 4s;
+}
+
+@keyframes fadein {
+  0%, 30%, 70%, 100% {
+    opacity: 0
+  }
+  30%, 70%{
+    opacity: 1;
+  }
+}
+
+
 .toggle__button__field {
   background-color: #F5F5F5;
   border: none;
@@ -318,12 +348,12 @@ export default {
 }
 
 .active {
-  background-color: rgba(0, 255, 56, 0.40);
+  background-color: rgba(0, 255, 56, 0.40) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .active:hover {
-  background-color: #00FF38;
+  background-color: #00FF38 !important;
 }
 
 .button__toggle {
@@ -339,6 +369,11 @@ export default {
   padding-right: 10px;
   width: 110px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.button__toggle:hover {
+  background-color: rgba(255, 0, 0, 0.8);
 }
 
 .autotests__text {

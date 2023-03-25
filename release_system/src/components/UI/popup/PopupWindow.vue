@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "PopupWindow"
+  name: "PopupWindow",
 }
 </script>
 
@@ -20,13 +20,12 @@ export default {
   text-align: center;
 }
 
-.popup__window{
-  border: 2px solid black;
+.popup__window {
   padding: 20px;
   border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   height: 80px;
   width: 20%;
   margin-bottom: 20px;
 }
-
 </style>

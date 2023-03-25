@@ -15,5 +15,5 @@ export default [
     cardsList,
     deleteReleaseButton,
     popupWindow,
-    api
+    api,
 ]

@@ -7,8 +7,8 @@
     <img src="@/assets/navigationMenuImages/plus-symbol.png" class="img">
     Запланировать релиз
   </navigation-menu-button>
-  <navigation-menu-button @click="$router.push('/releasesList')">
-    <img src="@/assets/navigationMenuImages/list-symbol.png" class="img" >
+  <navigation-menu-button @click="$router.push('/releases')">
+    <img src="@/assets/navigationMenuImages/list-symbol.png" class="img">
     Список релизов
   </navigation-menu-button>
   <navigation-menu-button @click="$router.push('/settings')">
@@ -23,6 +23,7 @@
 
 <script>
 import NavigationMenuButton from "@/components/UI/buttons/NavigationMenuButton";
+
 export default {
   name: "NavigationMenu",
   components: {NavigationMenuButton},
@@ -30,19 +31,20 @@ export default {
 </script>
 
 <style scoped>
-.logo__img{
+.logo__img {
   height: 50px;
   width: 50px;
   padding-right: 10px;
 }
 
-.logo{
+.logo {
   display: flex;
-  font-family: Montserrat,serif;
+  font-family: Montserrat, serif;
   font-size: 30px;
   text-align: center;
 }
-.img{
+
+.img {
   height: 30px;
   width: 30px;
   padding-right: 10px;

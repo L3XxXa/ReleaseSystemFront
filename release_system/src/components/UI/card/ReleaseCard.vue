@@ -7,9 +7,11 @@
       Даты: {{ date }}
     </p>
     <p class="content__1">Автотесты: {{ release.auto_tests_required }}</p>
-    <p class="content__1">Согласование: {{ release.approve_required }}</p>
+    <p class="content__1">Статус: {{ release.status }}</p>
     <p class="content__1">Ответственный: {{ release.on_duty }}</p>
-    <delete-release-button @click="deleteRelease"></delete-release-button>
+    <delete-release-button @click="deleteRelease" class="button">
+      <img src="@/assets/img/delete.png" class="img">
+    </delete-release-button>
   </div>
 </template>
 
@@ -17,7 +19,6 @@
 import DeleteReleaseButton from "@/components/UI/buttons/DeleteReleaseButton";
 import App from "@/App";
 import api from "@/api/Api";
-
 
 
 export default {
@@ -55,14 +56,13 @@ export default {
         on_duty: this.release.on_duty
       }
       let response
-      await(async () => {
+      await (async () => {
         response = await api.methods.deleteRelease(data)
       })()
-      if (response.status === 200){
+      if (response.status === 200) {
         alert("Релиз удален")
         location.reload()
-      }
-      else {
+      } else {
         alert("Ошибка")
       }
     }
@@ -78,14 +78,19 @@ export default {
   font-family: Montserrat;
   font-size: 20px;
   text-align: center;
+}
 
+.img{
+  height: 28px;
+  width: 30px;
+  align-self: center;
 }
 
 .card {
-  border: 2px solid black;
   padding: 20px;
   border-radius: 15px;
   width: 20%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
 </style>

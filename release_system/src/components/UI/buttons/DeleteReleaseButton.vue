@@ -1,6 +1,8 @@
 <template>
   <button class="button">
-    <img src="@/assets/img/delete.png" class="img">
+    <slot class="img">
+
+    </slot>
   </button>
 </template>
 
@@ -21,9 +23,11 @@ export default {
   background-color: white;
   border-width: 0;
   padding: 5px;
-  box-shadow: 0 0 0 3px #F5F5F5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 0, 0, 0.5);
 }
 .button:hover{
-  background-color: #F5F5F5;
+  box-shadow: 0 0 0 0;
+  background-color: rgba(255, 0, 0, 0.8);
 }
 </style>
