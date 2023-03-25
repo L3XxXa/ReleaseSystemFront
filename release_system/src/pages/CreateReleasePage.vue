@@ -59,6 +59,7 @@ ve
         </div>
         <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
       </Form>
+      <popup-window>{{pop_up_text}}</popup-window>
     </div>
   </div>
 
@@ -69,10 +70,12 @@ ve
 import {ErrorMessage, Field, Form} from "vee-validate";
 import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 import api from "@/api/Api";
+import PopupWindow from "@/components/UI/popup/PopupWindow";
 export default {
 
   name: "CreateReleasePage",
   components: {
+    PopupWindow,
     Form,
     Field,
     ErrorMessage,
@@ -95,7 +98,8 @@ export default {
       empty_on_duty: false,
       empty_followers: false,
       empty_task_link: false,
-      empty_ver: false
+      empty_ver: false,
+      pop_up_text: ''
     }
   },
   methods: {
@@ -270,10 +274,11 @@ export default {
         response = await api.methods.planRelease(data)
       })()
       if (response.status === 200){
-        alert("Релиз успешно запланирован")
+        this.pop_up_text = "Релиз успешно запланирован"
         this.unsetData()
       }
       else {
+        console.log(response.message)
         alert("Ошибка")
       }
     },
