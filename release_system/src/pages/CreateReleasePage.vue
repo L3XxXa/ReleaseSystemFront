@@ -37,23 +37,20 @@ ve
                :rules="validURL" :validateOnBlur="true" v-model="task_link"
                @blur="checkInput('task_link')" :class="{'error__field' : empty_task_link}"/>
         <ErrorMessage name="task_link" class="error__message"/>
-        <div class="input__field">
-          <div class="toggle__button__field">
-            <p class="autotests__text">Нужно согласование?</p>
-            <button type="button" class="button__toggle" :class="{'active':approve_required}"
-                    @click="toggleButtonApprove">
-              {{ approve_required ? "Да" : "Нет" }}
-            </button>
-          </div>
+        <div class="toggle__button__field">
+          <p class="autotests__text">Нужно согласование?</p>
+          <button type="button" class="button__toggle" :class="{'active':approve_required}"
+                  @click="toggleButtonApprove">
+            {{ approve_required ? "Да" : "Нет" }}
+          </button>
+
         </div>
-        <div class="input__field">
-          <div class="toggle__button__field">
-            <p class="autotests__text">Нужны автотесты?</p>
-            <button type="button" class="button__toggle" :class="{'active':auto_tests_required}"
-                    @click="toggleButtonAutotests">
-              {{ auto_tests_required ? "Да" : "Нет" }}
-            </button>
-          </div>
+        <div class="toggle__button__field">
+          <p class="autotests__text">Нужны автотесты?</p>
+          <button type="button" class="button__toggle" :class="{'active':auto_tests_required}"
+                  @click="toggleButtonAutotests">
+            {{ auto_tests_required ? "Да" : "Нет" }}
+          </button>
         </div>
         <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
       </Form>
@@ -331,20 +328,23 @@ export default {
   0%, 30%, 70%, 100% {
     opacity: 0
   }
-  30%, 70%{
+  30%, 70% {
     opacity: 1;
   }
 }
 
 
 .toggle__button__field {
+  margin-left: 22%;
+  margin-top: 15px;
+  border: solid #F5F5F5 2px;
   background-color: #F5F5F5;
-  border: none;
-  width: 41.1%;
+  width: 40%;
   height: 50px;
   border-radius: 10px;
-  display: flex;
-  position: relative;
+  font-family: Montserrat;
+  font-size: 20px;
+  padding-left: 15px;
 }
 
 .active {
@@ -357,9 +357,9 @@ export default {
 }
 
 .button__toggle {
-  position: absolute;
-  left: 510px;
   margin-top: 5px;
+  margin-right: 10px;
+  float: right;
   height: 40px;
   font-family: Montserrat;
   color: black;

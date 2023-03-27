@@ -5,7 +5,7 @@
     </h1>
     <span>У нас есть котик</span>
   </div>
-  <img src="@/assets/img/kitten.jpg">
+  <img src="@/assets/buttons/kitten.jpg">
 
 </template>
 

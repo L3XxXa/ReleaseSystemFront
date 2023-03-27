@@ -6,24 +6,24 @@
     <p class="content__1">
       Даты: {{ date }}
     </p>
-    <p class="content__1">Автотесты: {{ release.auto_tests_required }}</p>
     <p class="content__1">Статус: {{ release.status }}</p>
     <p class="content__1">Ответственный: {{ release.on_duty }}</p>
-    <delete-release-button @click="deleteRelease" class="button">
-      <img src="@/assets/img/delete.png" class="img">
-    </delete-release-button>
+    <p class="content__1">Автотесты: {{autotests}}</p>
+    <card-button class="edit__button" @click="editRelease">
+      <img src="@/assets/buttons/edit.png" class="img">
+    </card-button>
+    <card-button @click="deleteRelease" class="delete__button">
+      <img src="@/assets/buttons/delete.png" class="img">
+    </card-button>
   </div>
 </template>
 
 <script>
-import DeleteReleaseButton from "@/components/UI/buttons/DeleteReleaseButton";
 import App from "@/App";
 import api from "@/api/Api";
 
-
 export default {
   name: "ReleaseCard",
-  components: {DeleteReleaseButton},
   props: {
     release: {
       type: Object,
@@ -32,7 +32,8 @@ export default {
   },
   data() {
     return {
-      date: ""
+      date: "",
+      autotests: ""
     }
   },
   methods: {
@@ -65,11 +66,24 @@ export default {
       } else {
         alert("Ошибка")
       }
+    },
+    editRelease(){
+      alert("EDITING")
+    },
+    parseAutotests() {
+      if (this.release.auto_tests_required){
+        this.autotests = "нужны"
+      }
+      else {
+        this.autotests = "не нужны"
+      }
     }
   },
   mounted() {
     this.parseDate()
-  }
+    this.parseAutotests()
+  },
+
 }
 </script>
 
@@ -80,16 +94,29 @@ export default {
   text-align: center;
 }
 
+.edit__button:hover{
+  background-color: #F5F5F5;
+}
+
 .img{
   height: 28px;
   width: 30px;
   align-self: center;
 }
 
+.delete__button{
+  background-color: rgba(255, 0, 0, 0.5) !important;
+  float: right;
+}
+
+.delete__button:hover{
+  background-color: rgba(255, 0, 0, 0.8) !important;
+}
+
 .card {
   padding: 20px;
   border-radius: 15px;
-  width: 20%;
+  width: 26%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
