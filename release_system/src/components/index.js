@@ -6,6 +6,7 @@ import cardsList from "@/components/UI/cardsList/CardsList";
 import cardButton from "@/components/UI/buttons/CardButton";
 import popupWindow from "@/components/UI/popup/PopupWindow";
 import api from "@/api/Api";
+import logoButton from "@/components/UI/buttons/LogoButton";
 
 export default [
     navigationMenuButton,
@@ -15,5 +16,6 @@ export default [
     cardsList,
     popupWindow,
     api,
-    cardButton
+    cardButton,
+    logoButton
 ]

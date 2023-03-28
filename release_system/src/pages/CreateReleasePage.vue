@@ -307,6 +307,10 @@ export default {
   color: red;
 }
 
+.error__field::placeholder{
+  color: red;
+}
+
 .error__message {
   color: red;
   font-family: Montserrat;
