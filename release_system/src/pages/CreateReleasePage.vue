@@ -10,9 +10,7 @@ ve
         <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
                @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
                placeholder="Название релиза" v-model="app_name"/>
-
         <ErrorMessage name="app_name" class="error__message"/>
-
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
                :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
@@ -39,46 +37,39 @@ ve
                :rules="validURL" :validateOnBlur="true" v-model="task_link"
                @blur="checkInput('task_link')" :class="{'error__field' : empty_task_link}"/>
         <ErrorMessage name="task_link" class="error__message"/>
-        <div class="input__field">
-          <div class="toggle__button__field">
-            <p class="autotests__text">Нужно согласование?</p>
-            <button type="button" class="button__toggle" :class="{'active':approve_required}"
-                    @click="toggleButtonApprove">
-              {{ approve_required ? "Да" : "Нет" }}
-            </button>
-          </div>
+        <div class="toggle__button__field">
+          <p class="autotests__text">Нужно согласование?</p>
+          <button type="button" class="button__toggle" :class="{'active':approve_required}"
+                  @click="toggleButtonApprove">
+            {{ approve_required ? "Да" : "Нет" }}
+          </button>
+
         </div>
-        <div class="input__field">
-          <div class="toggle__button__field">
-            <p class="autotests__text">Нужны автотесты?</p>
-            <button type="button" class="button__toggle" :class="{'active':auto_tests_required}"
-                    @click="toggleButtonAutotests">
-              {{ auto_tests_required ? "Да" : "Нет" }}
-            </button>
-          </div>
+        <div class="toggle__button__field">
+          <p class="autotests__text">Нужны автотесты?</p>
+          <button type="button" class="button__toggle" :class="{'active':auto_tests_required}"
+                  @click="toggleButtonAutotests">
+            {{ auto_tests_required ? "Да" : "Нет" }}
+          </button>
         </div>
         <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
       </Form>
+      <popup-window id="popup_window" class="popup__window">{{ pop_up_text }}</popup-window>
     </div>
   </div>
 
 </template>
 
 <script>
-
 import {ErrorMessage, Field, Form} from "vee-validate";
-import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
-import App from "@/App";
-import axios from "axios";
+import api from "@/api/Api";
 
 export default {
-
   name: "CreateReleasePage",
   components: {
     Form,
     Field,
     ErrorMessage,
-    ReleaseButton
   },
   data() {
     return {
@@ -97,7 +88,9 @@ export default {
       empty_on_duty: false,
       empty_followers: false,
       empty_task_link: false,
-      empty_ver: false
+      empty_ver: false,
+      pop_up_text: '',
+      pop_up_visible: false
     }
   },
   methods: {
@@ -219,7 +212,7 @@ export default {
         const urlToCheck = new URL(str)
         const patternOfPathname = new RegExp('\\/browse\\/[a-z]+-+[1-9]+', 'i')
         if (!patternOfPathname.test(urlToCheck.pathname)) {
-          return "Не правильный формат ссылки"
+          return "Неправильный формат ссылки"
         }
       } catch (err) {
         return "Не является ссылкой"
@@ -251,10 +244,14 @@ export default {
         return followers.split()
       }
     },
-
+    openPopup() {
+      document.getElementById("popup_window").style.display = "block"
+      setTimeout(this.closePopup, 5000)
+    },
+    closePopup() {
+      document.getElementById("popup_window").style.display = "none"
+    },
     async submittingForm() {
-      const url = new URL(App.data().link)
-      url.pathname = "api/v1/plan"
       const parsedFollowers = this.parseFollowers(this.followers)
       const normalizedStartDate = this.normalizeDate(this.start_date)
       const normalizedFinishDate = this.normalizeDate(this.finish_date)
@@ -269,23 +266,22 @@ export default {
         on_duty: this.on_duty,
         followers: parsedFollowers
       }
-      console.log(normalizedStartDate)
-      console.log(normalizedFinishDate)
-      console.log(data)
-      axios({
-        method: 'post',
-        url: url.href,
-        headers: {
-          'Content-Type': 'application/json',
-          },
-        data: data
-      }).then(response => {
-        console.log(response.data)
+      let response
+      await (async () => {
+        response = await api.methods.planRelease(data)
+      })()
+      if (response.status === 200) {
+        this.pop_up_text = "Релиз успешно запланирован"
+        this.openPopup()
         this.unsetData()
-      }).catch(error => {
-        console.log(error)
-      })
-
+      } else {
+        console.log(response.message)
+        if (response.status >= 500) {
+          this.pop_up_text = "Внутренняя ошибка на сервере"
+        } else {
+          this.pop_up_text = response.message
+        }
+      }
     },
   },
 
@@ -296,12 +292,16 @@ export default {
 .heading {
   font-family: Montserrat;
   font-weight: normal;
-  margin-left: 30%;
+  margin-left: 28%;
 
 }
 
 .error__field {
   border: solid red 2px !important;
+  color: red;
+}
+
+.error__field::placeholder{
   color: red;
 }
 
@@ -312,29 +312,52 @@ export default {
   margin-left: 15px;
 }
 
+.popup__window {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 20px;
+  opacity: 0;
+  animation: fadein 4s;
+}
+
+@keyframes fadein {
+  0%, 30%, 70%, 100% {
+    opacity: 0
+  }
+  30%, 70% {
+    opacity: 1;
+  }
+}
+
+
 .toggle__button__field {
+  margin-left: 22%;
+  margin-top: 15px;
+  border: solid #F5F5F5 2px;
   background-color: #F5F5F5;
-  border: none;
-  width: 41.1%;
+  width: 40%;
   height: 50px;
   border-radius: 10px;
-  display: flex;
-  position: relative;
+  font-family: Montserrat;
+  font-size: 20px;
+  padding-left: 15px;
 }
 
 .active {
-  background-color: rgba(0, 255, 56, 0.40);
+  background-color: rgba(0, 255, 56, 0.40) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .active:hover {
-  background-color: #00FF38;
+  background-color: #00FF38 !important;
 }
 
 .button__toggle {
-  position: absolute;
-  left: 510px;
   margin-top: 5px;
+  margin-right: 10px;
+  float: right;
   height: 40px;
   font-family: Montserrat;
   color: black;
@@ -344,6 +367,11 @@ export default {
   padding-right: 10px;
   width: 110px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.button__toggle:hover {
+  background-color: rgba(255, 0, 0, 0.8);
 }
 
 .autotests__text {

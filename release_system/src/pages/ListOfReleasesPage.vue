@@ -7,43 +7,44 @@
       <h1 class="heading">
         Список релизов
       </h1>
-      <release-card>
-
-      </release-card>
+      <change-time></change-time>
+      <cards-list :releases="releases"></cards-list>
     </div>
   </div>
 </template>
 
 <script>
-import ReleaseCard from "@/components/ReleaseCard";
-import axios from "axios";
 import App from "@/App.vue";
+import api from "@/api/Api";
 
 export default {
   name: "ListOfReleasesPage",
-  components: {ReleaseCard},
+  data() {
+    return {
+      releases: []
+    }
+  },
   methods: {
     async getData() {
       const url = new URL(App.data().link)
       url.pathname = "api/v1/releases"
-      await axios.get(url.href)
-          .then(response => {
-            console.log("SUCCESSFUL")
-            console.log(response.data.Message)
-          })
-          .catch(error => {
-            console.log("UNSUCCESSFUL")
-            console.log(error)
-          })
+      let response
+      await (async () => {
+        response = await api.methods.getReleases()
+      })()
+      console.log(response)
+      if (response.status === 200) {
+        this.releases = [...this.releases, ...response.data.Message]
+      }
+      else {
+        alert("Ошибка")
+      }
     },
-
   },
   mounted() {
     this.getData()
   }
-
 }
-
 </script>
 
 <style scoped>

@@ -9,7 +9,7 @@ const routes = [
         component: createReleasePage,
     },
     {
-        path: '/releasesList',
+        path: '/releases',
         component: ListOfReleasesPage
     },
     {
