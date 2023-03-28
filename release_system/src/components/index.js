@@ -7,7 +7,7 @@ import cardButton from "@/components/UI/buttons/CardButton";
 import popupWindow from "@/components/UI/popup/PopupWindow";
 import api from "@/api/Api";
 import logoButton from "@/components/UI/buttons/LogoButton";
-
+import changeTime from "@/components/UI/form/ChangeTime";
 export default [
     navigationMenuButton,
     navigationMenu,
@@ -17,5 +17,6 @@ export default [
     popupWindow,
     api,
     cardButton,
-    logoButton
+    logoButton,
+    changeTime
 ]

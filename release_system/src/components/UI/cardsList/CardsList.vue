@@ -3,7 +3,9 @@
     <release-card
       v-for="release in releases"
       :release="release"
-      :key="release.id"/>
+      :key="release.id"
+      @click="showInfoAboutRelease"
+    />
   </div>
   <h3 v-show="releases.length === 0" class="no__releases">Нет запланированных релизов</h3>
 </template>
@@ -22,7 +24,7 @@ export default {
   methods:{
     showToConsole(){
       console.log(this.releases)
-    }
+    },
   },
   mounted() {
     this.showToConsole()

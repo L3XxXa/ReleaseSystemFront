@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" @click="showData">
     <p class="content__1">
       Название: {{ release.app_name }}
     </p>
@@ -43,6 +43,9 @@ export default {
       const month = date.substring(5, 7)
       const years = date.slice(0, 4)
       return day + '.' + month + '.' + years
+    },
+    showData(){
+
     },
     parseDate() {
       const start_date = this.unnormalizeDate(this.release.start_date)

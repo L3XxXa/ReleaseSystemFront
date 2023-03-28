@@ -7,6 +7,7 @@
       <h1 class="heading">
         Список релизов
       </h1>
+      <change-time></change-time>
       <cards-list :releases="releases"></cards-list>
     </div>
   </div>
@@ -14,12 +15,10 @@
 
 <script>
 import App from "@/App.vue";
-import CardsList from "@/components/UI/cardsList/CardsList";
 import api from "@/api/Api";
 
 export default {
   name: "ListOfReleasesPage",
-  components: {CardsList},
   data() {
     return {
       releases: []

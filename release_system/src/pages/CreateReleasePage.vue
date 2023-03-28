@@ -61,21 +61,15 @@ ve
 </template>
 
 <script>
-
 import {ErrorMessage, Field, Form} from "vee-validate";
-import ReleaseButton from "@/components/UI/buttons/ReleaseButton";
 import api from "@/api/Api";
-import PopupWindow from "@/components/UI/popup/PopupWindow";
 
 export default {
-
   name: "CreateReleasePage",
   components: {
-    PopupWindow,
     Form,
     Field,
     ErrorMessage,
-    ReleaseButton
   },
   data() {
     return {
