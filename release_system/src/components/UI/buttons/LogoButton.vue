@@ -2,7 +2,6 @@
   <div>
     <button class="button">
       <img src="@/assets/logo.png" class="logo__img">
-      Release system
     </button>
   </div>
 </template>
@@ -15,8 +14,8 @@ export default {
 
 <style scoped>
 .logo__img {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 230px;
   padding-right: 10px;
   float: left;
 }

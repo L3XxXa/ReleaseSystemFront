@@ -272,16 +272,20 @@ export default {
       })()
       if (response.status === 200) {
         this.pop_up_text = "Релиз успешно запланирован"
-        this.openPopup()
         this.unsetData()
       } else {
         console.log(response.message)
         if (response.status >= 500) {
           this.pop_up_text = "Внутренняя ошибка на сервере"
-        } else {
-          this.pop_up_text = response.message
+        }
+        else if (response.status === 400){
+          this.pop_up_text = "Данный релиз уже существует"
+        }
+        else {
+          this.pop_up_text = response.text
         }
       }
+      this.openPopup()
     },
   },
 
