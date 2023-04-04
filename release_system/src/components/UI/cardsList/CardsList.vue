@@ -22,14 +22,10 @@ export default {
     }
   },
   methods:{
-    showToConsole(){
-      console.log(this.releases)
+    showInfoAboutRelease(data){
+      console.log(this.releases + " " + data)
     },
   },
-  mounted() {
-    this.showToConsole()
-  }
-
 }
 </script>
 
