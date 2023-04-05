@@ -7,8 +7,7 @@
       <h1 class="heading">
         Список релизов
       </h1>
-      <change-time></change-time>
-      <cards-list :releases="releases"></cards-list>
+      <cards-list :releases="approveRequestedReleases"></cards-list>
     </div>
   </div>
 </template>
@@ -21,7 +20,10 @@ export default {
   name: "ListOfReleasesPage",
   data() {
     return {
-      releases: []
+      releases: [],
+      approveRequestedReleases: [],
+      plannedReleases: [],
+      inProgressReleases: [],
     }
   },
   methods: {
@@ -35,11 +37,27 @@ export default {
       console.log(response)
       if (response.status === 200) {
         this.releases = [...this.releases, ...response.data.Message]
-      }
-      else {
+      } else {
         alert("Ошибка")
       }
+      this.divideReleasesByStatus(response.data.Message)
     },
+
+    divideReleasesByStatus(releases) {
+      for (let i = 0; i < releases.length; i++) {
+        switch (releases[i].status) {
+          case "approval_requested":
+            this.approveRequestedReleases.push(releases[i])
+            break
+          case "planned":
+            this.plannedReleases.push(releases[i])
+            break
+          case "in_progress":
+            this.inProgressReleases.push(releases[i])
+            break
+        }
+      }
+    }
   },
   mounted() {
     this.getData()

@@ -1,12 +1,12 @@
 <template>
   <div class="card" @click="showData">
-    <p class="content__1">
-      Название: {{ release.app_name }}
+    <p class="content">
+      {{ release.app_name }}
     </p>
-    <p class="content__1">
-      Даты: {{ date }}
+    <p class="content">
+      {{ date }}
     </p>
-    <p class="content__1">Автотесты: {{autotests}}</p>
+    <p class="content__1">Автотесты {{autotests}}</p>
     <card-button class="edit__button" @click="editRelease">
       <img src="@/assets/buttons/edit.png" class="img">
     </card-button>
@@ -89,14 +89,29 @@ export default {
 </script>
 
 <style scoped>
-.content__1 {
+.content {
   font-family: Montserrat;
   font-size: 20px;
   text-align: center;
 }
 
+.content__1{
+  font-family: Montserrat;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
 .edit__button:hover{
   background-color: #F5F5F5;
+}
+
+.edit__button{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .img{
@@ -106,10 +121,12 @@ export default {
 }
 
 .delete__button{
+  position: absolute;
   background-color: rgba(255, 0, 0, 0.5) !important;
-  float: right;
-  
-
+  margin-right: 10px;
+  margin-bottom: 10px;
+  bottom: 0;
+  right: 0;
 }
 
 .delete__button:hover{
@@ -119,6 +136,7 @@ export default {
 .card {
   padding: 20px;
   border-radius: 15px;
+  position: relative;
   width: 20%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
