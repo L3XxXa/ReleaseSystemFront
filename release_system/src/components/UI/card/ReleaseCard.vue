@@ -6,8 +6,6 @@
     <p class="content__1">
       Даты: {{ date }}
     </p>
-    <p class="content__1">Статус: {{ release.status }}</p>
-    <p class="content__1">Ответственный: {{ release.on_duty }}</p>
     <p class="content__1">Автотесты: {{autotests}}</p>
     <card-button class="edit__button" @click="editRelease">
       <img src="@/assets/buttons/edit.png" class="img">
@@ -110,6 +108,8 @@ export default {
 .delete__button{
   background-color: rgba(255, 0, 0, 0.5) !important;
   float: right;
+  
+
 }
 
 .delete__button:hover{
@@ -119,7 +119,7 @@ export default {
 .card {
   padding: 20px;
   border-radius: 15px;
-  width: 26%;
+  width: 20%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
 }
