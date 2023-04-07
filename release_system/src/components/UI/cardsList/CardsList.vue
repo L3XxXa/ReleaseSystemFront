@@ -1,40 +1,81 @@
 <template>
-  <div v-show="releases.length > 0">
+  <div class="in__process">
+    <div class="status">
+      <div class="status__wrapper">
+        <p class="status__text">В процессе</p>
+      </div>
+      <div class="amount__wrapper">
+        <p class="amount">{{ amount }}</p>
+      </div>
+    </div>
     <release-card
-      v-for="release in releases"
-      :release="release"
-      :key="release.id"
-      @click="showInfoAboutRelease"
+        v-for="release in releases"
+        :release="release"
+        :key="release.id"
+        @click="showInfoAboutRelease"
     />
   </div>
-  <h3 v-show="releases.length === 0" class="no__releases">Нет запланированных релизов</h3>
 </template>
 
 <script>
 import ReleaseCard from "@/components/UI/card/ReleaseCard";
+
 export default {
   name: "CardsList",
   components: {ReleaseCard},
-  props:{
-    releases:{
+  props: {
+    releases: {
       type: Array,
       required: true
     }
   },
-  methods:{
-    showInfoAboutRelease(data){
+  data() {
+    return {
+      amount: 0
+    }
+  },
+  methods: {
+    showInfoAboutRelease(data) {
       console.log(this.releases + " " + data)
     },
   },
+
 }
 </script>
 
 <style scoped>
-.no__releases{
-  font-family: Montserrat;
-  font-weight: normal;
-  margin-left: 29%;
+.in__process {
+  border-radius: 20px;
+  background-color: #E4E4E4;
+  width: 21%;
+  height: 80%;
+  position: absolute;
 }
 
+.amount {
+  font-family: Montserrat;
+}
 
+.amount__wrapper {
+  width: 5%;
+  display: table-cell;
+}
+
+.status {
+  height: 1%;
+  display: table;
+  position: relative;
+}
+
+.status__wrapper {
+  background-color: #62DF8D;
+  border-radius: 30px;
+  text-align: center;
+  display: table-cell;
+  margin-left: 5%;
+}
+
+.status__text {
+  font-family: Montserrat;
+}
 </style>

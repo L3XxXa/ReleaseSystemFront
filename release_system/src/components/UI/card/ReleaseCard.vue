@@ -14,6 +14,8 @@
       <img src="@/assets/buttons/delete.png" class="img">
     </card-button>
   </div>
+  <div class="space"/>
+
 </template>
 
 <script>
@@ -137,8 +139,11 @@ export default {
   padding: 20px;
   border-radius: 15px;
   position: relative;
-  width: 20%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
+  width: 80%;
+  background-color: white;
+  margin: 0 auto;
+}
+.space{
+  margin-bottom: 10px;
 }
 </style>

@@ -7,7 +7,10 @@
       <h1 class="heading">
         Список релизов
       </h1>
-      <cards-list :releases="approveRequestedReleases"></cards-list>
+      <h3 v-show="releases.length === 0" class="no__releases">Нет запланированных релизов</h3>
+      <div v-show="releases.length > 0">
+        <cards-list :releases="approveRequestedReleases"></cards-list>
+      </div>
     </div>
   </div>
 </template>
@@ -89,5 +92,11 @@ export default {
   font-family: Montserrat;
   font-weight: normal;
   margin-left: 30%;
+}
+
+.no__releases {
+  font-family: Montserrat;
+  font-weight: normal;
+  margin-left: 29%;
 }
 </style>
