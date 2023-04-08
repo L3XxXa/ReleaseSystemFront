@@ -9,6 +9,7 @@ import api from "@/api/Api";
 import logoButton from "@/components/UI/buttons/LogoButton";
 import changeTime from "@/components/UI/form/ChangeTime";
 import cardsList from "@/components/UI/cardsLists/CardsList.vue";
+import approveRequestedReleases from "@/components/UI/cardsLists/ApproveRequestedReleases.vue";
 
 export default [
     navigationMenuButton,
@@ -21,5 +22,6 @@ export default [
     logoButton,
     changeTime,
     inProcessReleases,
-    cardsList
+    cardsList,
+    approveRequestedReleases
 ]

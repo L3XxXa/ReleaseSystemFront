@@ -5,7 +5,6 @@
                 :key="release.id"
                 :release="release"
         />
-
     </div>
 </template>
 
@@ -22,5 +21,15 @@ export default {
 </script>
 
 <style scoped>
+.list__container {
+    overflow-y: scroll;
+    width: 100%;
+    position: relative;
+    height: 94%;
+    bottom: 0;
+}
 
+.list__container__no__overflow {
+    overflow-y: hidden !important;
+}
 </style>

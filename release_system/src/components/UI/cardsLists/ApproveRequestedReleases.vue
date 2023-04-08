@@ -1,21 +1,21 @@
 <template>
     <div class="in__process">
         <div class="status__container">
-            <p class="status__text">В процессе</p>
+            <p class="status__text">Ожидают подтверждения</p>
         </div>
-    <cards-list :releases="releases"/>
+        <cards-list :releases="releases"/>
     </div>
 </template>
 
 <script>
 export default {
-    name: "InProcessReleases",
-    props: {
+    name: "ApproveRequestedReleases",
+    props:{
         releases: {
             type: Array,
             required: true
         }
-    },
+    }
 }
 </script>
 
@@ -30,9 +30,9 @@ export default {
 
 .status__container {
     position: relative;
-    background-color: #62DF8D;
+    background-color: #DFB562;
     font-size: medium;
-    width: 35%;
+    width: 75%;
     border-radius: 30px;
     text-align: center;
     margin-left: 5%;

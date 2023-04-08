@@ -8,7 +8,8 @@
                 Список релизов
             </h1>
             <div class="lists__wrapper">
-                <in-process-releases :releases="inProgressReleases"></in-process-releases>
+                <approve-requested-releases :releases="approveRequestedReleases"></approve-requested-releases>
+
             </div>
         </div>
     </div>
