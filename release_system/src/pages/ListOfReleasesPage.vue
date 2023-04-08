@@ -8,7 +8,7 @@
                 Список релизов
             </h1>
             <div class="lists__wrapper">
-                <cards-list :releases="inProgressReleases"></cards-list>
+                <in-process-releases :releases="inProgressReleases"></in-process-releases>
             </div>
         </div>
     </div>
@@ -17,11 +17,9 @@
 <script>
 import App from "@/App.vue";
 import api from "@/api/Api";
-import CardsList from "@/components/UI/cardsList/CardsList.vue";
 
 export default {
     name: "ListOfReleasesPage",
-    components: {CardsList},
     data() {
         return {
             releases: [],

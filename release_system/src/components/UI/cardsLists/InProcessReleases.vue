@@ -3,35 +3,18 @@
         <div class="status__container">
             <p class="status__text">В процессе</p>
         </div>
-        <div class="space"></div>
-
-        <div class="list__container" :class="{'list__container__no__overflow':releases.length <= 3}">
-            <release-card
-                    v-for="release in releases"
-                    :key="release.id"
-                    :release="release"
-                    @click="showInfoAboutRelease"
-            />
-        </div>
+    <cards-list :releases="releases"/>
     </div>
 </template>
 
 <script>
 
-import ReleaseCard from "@/components/UI/card/ReleaseCard.vue";
-
 export default {
-    name: "CardsList",
-    components: {ReleaseCard},
+    name: "InProcessReleases",
     props: {
         releases: {
             type: Array,
             required: true
-        }
-    },
-    data() {
-        return {
-            amount: 0
         }
     },
     methods: {
@@ -70,7 +53,7 @@ export default {
     margin-left: 5%;
 }
 
-.list__container__no__overflow{
+.list__container__no__overflow {
     overflow-y: hidden !important;
 }
 
