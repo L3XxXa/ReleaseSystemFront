@@ -102,7 +102,7 @@ export default {
 }
 .element{
     display: inline-block;
-    margin-left: 6%;
+    margin-left: 6.1%;
 }
 
 </style>
