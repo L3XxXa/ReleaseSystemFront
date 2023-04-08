@@ -19,10 +19,7 @@ export default {
 
 <style>
 @font-face {
-  font-family: "Cairo";
-  src: local("Cairo"), url("@/fonts/Cairo/Cairo-VariableFont_wght.ttf") format("truetype");
+  font-family: "Montserrat" !important;
+  src: local("Montserrat"), url("@/fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
 }
-
-
-
 </style>

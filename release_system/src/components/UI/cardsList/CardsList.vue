@@ -1,81 +1,81 @@
 <template>
-  <div class="in__process">
-    <div class="status">
-      <div class="status__wrapper">
-        <p class="status__text">В процессе</p>
-      </div>
-      <div class="amount__wrapper">
-        <p class="amount">{{ amount }}</p>
-      </div>
+    <div class="in__process">
+        <div class="status__container">
+            <p class="status__text">В процессе</p>
+        </div>
+        <div class="space"></div>
+
+        <div class="list__container" :class="{'list__container__no__overflow':releases.length <= 3}">
+            <release-card
+                    v-for="release in releases"
+                    :key="release.id"
+                    :release="release"
+                    @click="showInfoAboutRelease"
+            />
+        </div>
     </div>
-    <release-card
-        v-for="release in releases"
-        :release="release"
-        :key="release.id"
-        @click="showInfoAboutRelease"
-    />
-  </div>
 </template>
 
 <script>
-import ReleaseCard from "@/components/UI/card/ReleaseCard";
+
+import ReleaseCard from "@/components/UI/card/ReleaseCard.vue";
 
 export default {
-  name: "CardsList",
-  components: {ReleaseCard},
-  props: {
-    releases: {
-      type: Array,
-      required: true
-    }
-  },
-  data() {
-    return {
-      amount: 0
-    }
-  },
-  methods: {
-    showInfoAboutRelease(data) {
-      console.log(this.releases + " " + data)
+    name: "CardsList",
+    components: {ReleaseCard},
+    props: {
+        releases: {
+            type: Array,
+            required: true
+        }
     },
-  },
+    data() {
+        return {
+            amount: 0
+        }
+    },
+    methods: {
+        showInfoAboutRelease(data) {
+            console.log(this.releases + " " + data)
+        },
+    },
 
 }
 </script>
 
 <style scoped>
 .in__process {
-  border-radius: 20px;
-  background-color: #E4E4E4;
-  width: 21%;
-  height: 80%;
-  position: absolute;
+    border-radius: 20px;
+    background-color: #E4E4E4;
+    width: 25%;
+    height: 100%;
+    position: absolute;
 }
 
-.amount {
-  font-family: Montserrat;
+.list__container {
+    overflow-y: scroll;
+    width: 100%;
+    position: relative;
+    height: 94%;
+    bottom: 0;
 }
 
-.amount__wrapper {
-  width: 5%;
-  display: table-cell;
+.status__container {
+    position: relative;
+    background-color: #62DF8D;
+    font-size: medium;
+    width: 35%;
+    border-radius: 30px;
+    text-align: center;
+    margin-left: 5%;
 }
 
-.status {
-  height: 1%;
-  display: table;
-  position: relative;
+.list__container__no__overflow{
+    overflow-y: hidden !important;
 }
 
-.status__wrapper {
-  background-color: #62DF8D;
-  border-radius: 30px;
-  text-align: center;
-  display: table-cell;
-  margin-left: 5%;
-}
 
 .status__text {
-  font-family: Montserrat;
+    font-family: Montserrat;
 }
 </style>
