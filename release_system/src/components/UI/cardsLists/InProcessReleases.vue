@@ -25,7 +25,6 @@ export default {
     background-color: #E4E4E4;
     width: 25%;
     height: 100%;
-    position: absolute;
 }
 
 .status__container {

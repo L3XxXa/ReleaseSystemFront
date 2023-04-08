@@ -1,7 +1,7 @@
 <template>
-    <div class="approve__requested">
+    <div class="planned__releases">
         <div class="status__container">
-            <p class="status__text">Ожидают подтверждения</p>
+            <p class="status__text">Запланированы</p>
         </div>
         <cards-list :releases="releases"/>
     </div>
@@ -9,18 +9,18 @@
 
 <script>
 export default {
-    name: "ApproveRequestedReleases",
-    props:{
+    name: "PlannedReleases",
+    props: {
         releases: {
             type: Array,
             required: true
         }
-    }
+    },
 }
 </script>
 
 <style scoped>
-.approve__requested {
+.planned__releases {
     border-radius: 20px;
     background-color: #E4E4E4;
     width: 25%;
@@ -29,9 +29,9 @@ export default {
 
 .status__container {
     position: relative;
-    background-color: #DFB562;
+    background-color: #8D98FF;
     font-size: medium;
-    width: 75%;
+    width: 46%;
     border-radius: 30px;
     text-align: center;
     margin-left: 5%;

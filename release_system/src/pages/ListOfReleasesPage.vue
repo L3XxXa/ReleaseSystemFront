@@ -8,8 +8,9 @@
                 Список релизов
             </h1>
             <div class="lists__wrapper">
-                <approve-requested-releases :releases="approveRequestedReleases"></approve-requested-releases>
-
+                <in-process-releases :releases="inProgressReleases" class="element"/>
+                <approve-requested-releases :releases="approveRequestedReleases" class="element"/>
+                <planned-releases :releases="plannedReleases" class="element"/>
             </div>
         </div>
     </div>
@@ -91,12 +92,17 @@ export default {
 .heading {
     font-family: Montserrat;
     font-weight: normal;
-    margin-left: 30%;
+    text-align: center;
 }
 
 .lists__wrapper{
     height: 84%;
     position: absolute;
-    width: 82%;
+    width: 82.5%;
 }
+.element{
+    display: inline-block;
+    margin-left: 6%;
+}
+
 </style>
