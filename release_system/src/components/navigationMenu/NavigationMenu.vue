@@ -26,8 +26,8 @@ export default {
 
 <style scoped>
 .img {
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   padding-right: 10px;
   align-self: center;
 }

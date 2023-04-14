@@ -10,5 +10,5 @@ components.forEach(component => {
     app.component(component.name, component)
 });
 axios.defaults.baseURL="";
-axios.defaults.timeout=3000;
+axios.defaults.timeout=1000;
 app.use(router).mount('#app');
