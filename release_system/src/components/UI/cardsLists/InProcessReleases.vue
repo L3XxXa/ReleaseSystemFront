@@ -3,7 +3,7 @@
         <div class="status__container">
             <p class="status__text">В процессе</p>
         </div>
-    <cards-list :releases="releases"/>
+        <cards-list :releases="releases"/>
     </div>
 </template>
 
@@ -28,10 +28,10 @@ export default {
 }
 
 .status__container {
+    width: max-content;
     position: relative;
     background-color: #62DF8D;
     font-size: medium;
-    width: 35%;
     border-radius: 30px;
     text-align: center;
     margin-left: 5%;
@@ -39,5 +39,6 @@ export default {
 
 .status__text {
     font-family: Montserrat;
+    padding: 5px;
 }
 </style>

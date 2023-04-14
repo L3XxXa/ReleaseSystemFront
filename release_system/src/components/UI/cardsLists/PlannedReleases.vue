@@ -26,18 +26,17 @@ export default {
     width: 25%;
     height: 100%;
 }
-
-.status__container {
-    position: relative;
+.status__container{
+    width: max-content;
     background-color: #8D98FF;
     font-size: medium;
-    width: 46%;
     border-radius: 30px;
     text-align: center;
     margin-left: 5%;
 }
-
 .status__text {
+    padding: 5px;
     font-family: Montserrat;
+
 }
 </style>

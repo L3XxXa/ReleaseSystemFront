@@ -11,7 +11,7 @@
 <script>
 export default {
     name: "CardsList",
-    props:{
+    props: {
         releases: {
             type: Array,
             required: true

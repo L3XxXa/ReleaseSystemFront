@@ -10,7 +10,7 @@
 <script>
 export default {
     name: "ApproveRequestedReleases",
-    props:{
+    props: {
         releases: {
             type: Array,
             required: true
@@ -28,10 +28,9 @@ export default {
 }
 
 .status__container {
-    position: relative;
+    width: max-content;
     background-color: #DFB562;
     font-size: medium;
-    width: 75%;
     border-radius: 30px;
     text-align: center;
     margin-left: 5%;
@@ -39,5 +38,6 @@ export default {
 
 .status__text {
     font-family: Montserrat;
+    padding: 5px;
 }
 </style>
