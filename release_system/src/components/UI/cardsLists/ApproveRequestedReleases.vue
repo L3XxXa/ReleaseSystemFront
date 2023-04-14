@@ -23,8 +23,6 @@ export default {
 .approve__requested {
     border-radius: 20px;
     background-color: #E4E4E4;
-    width: 25%;
-    height: 100%;
 }
 
 .status__container {
@@ -39,5 +37,7 @@ export default {
 .status__text {
     font-family: Montserrat;
     padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 </style>

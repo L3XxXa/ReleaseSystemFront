@@ -102,7 +102,9 @@ export default {
 }
 .element{
     display: inline-block;
-    margin-left: 6.3%;
+    margin-left: 5.4%;
+    width: 26%;
+    height: 100%;
 }
 
 </style>

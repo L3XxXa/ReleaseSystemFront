@@ -3,7 +3,7 @@
         <div class="status__container">
             <p class="status__text">Запланированы</p>
         </div>
-        <cards-list :releases="releases"/>
+        <cards-list class="list__container" :releases="releases"/>
     </div>
 </template>
 
@@ -23,10 +23,9 @@ export default {
 .planned__releases {
     border-radius: 20px;
     background-color: #E4E4E4;
-    width: 25%;
-    height: 100%;
 }
-.status__container{
+
+.status__container {
     width: max-content;
     background-color: #8D98FF;
     font-size: medium;
@@ -34,9 +33,11 @@ export default {
     text-align: center;
     margin-left: 5%;
 }
+
 .status__text {
     padding: 5px;
     font-family: Montserrat;
-
+    margin-left: 5px;
+    margin-right: 5px;
 }
 </style>
