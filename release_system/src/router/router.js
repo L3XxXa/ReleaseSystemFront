@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import createReleasePage from "@/pages/CreateReleasePage";
 import ListOfReleasesPage from "@/pages/ListOfReleasesPage";
 import settingsPage from "@/pages/SettingsPage";
-import logoutPage from "@/pages/LogoutPage";
+import loginPage from "@/pages/LoginPage.vue";
 const routes = [
     {
         path: '/createRelease',
@@ -17,9 +17,10 @@ const routes = [
         component: settingsPage
     },
     {
-        path: '/logout',
-        component: logoutPage
-    }
+        path: '/login',
+        component: loginPage
+    },
+
 ]
 
 const router = createRouter({
