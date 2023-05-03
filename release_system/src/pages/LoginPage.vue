@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <login-form/>
+  <login-form class="form"/>
 </div>
 </template>
 
@@ -15,5 +15,11 @@ export default {
 .container{
     width: 100%;
     height: 100%;
+}
+
+.form{
+    display: block;
+    margin: auto;
+    margin-top:3%;
 }
 </style>

@@ -23,9 +23,9 @@ export default {
 <style scoped>
 .list__container {
     overflow-y: scroll;
-    width: 100%;
+    width: 100px;
     position: relative;
-    height: 90.6%;
+    height: 500px;
     bottom: 0;
 }
 

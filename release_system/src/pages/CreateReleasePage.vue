@@ -1,4 +1,3 @@
-ve
 <template>
   <div>
     <div class="nav__menu">

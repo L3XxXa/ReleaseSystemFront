@@ -12,15 +12,23 @@
     <img src="@/assets/navigationMenuImages/settings-symbol.png" class="img">
     Настройки
   </navigation-menu-button>
-  <navigation-menu-button @click="$router.push('/logout')">
+  <navigation-menu-button @click="logout">
     <img src="@/assets/navigationMenuImages/log-out-symbol.png" class="img">
     Выйти
   </navigation-menu-button>
 </template>
 
 <script>
+import router from "@/router/router";
+
 export default {
   name: "NavigationMenu",
+    methods:{
+        logout(){
+            router.push("/login")
+            document.cookie = "password="
+        }
+    }
 }
 </script>
 

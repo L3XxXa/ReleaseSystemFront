@@ -74,19 +74,54 @@ export default {
         registerClick(){
             router.push("/register")
         },
+        createDateForCookie(){
+            let date = new Date(Date.now() + 86400e10);
+            date = date.toUTCString();
+            return date
+        },
+        saveToCookie(){
+            let date = this.createDateForCookie()
+            document.cookie = "login=" + this.login + "; expires=" + date
+            document.cookie = "password=" + this.password+ "; expires=" + date
+        },
         loginUser(){
-            alert(this.login + this.password)
+            if (this.rememberMe){
+                this.saveToCookie()
+            }
+            this.password=""
+            router.push("/releases")
+
+        },
+        autoPlaceLogin(){
+            this.login = this.getCookie("login")
+        },
+        getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        },
+        autoLogin(){
+            let login = this.getCookie("login")
+            let password = this.getCookie("password")
+            if (login !== "" && password!==""){
+                router.push("/releases")
+            }
         }
+    },
+    mounted() {
+        this.autoPlaceLogin()
+        this.autoLogin()
     }
+
 }
 </script>
 
 <style scoped>
 
 .form__background {
-    width: 900px;
-    position: fixed;
-    height: 780px;
+    padding: 30px;
+    width: 700px;
+    height: 800px;
     background-color: #E4E4E4;
     border-radius: 40px;
     box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.3);
@@ -96,6 +131,11 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+input.checkbox{
+    width: 30px;
+    height: 30px;
 }
 
 .p1 {
@@ -129,7 +169,7 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 800px;
+    width: 600px;
     height: 62px;
     font-family: Montserrat;
     border: 0;
@@ -141,6 +181,8 @@ export default {
 .label {
     font-family: Montserrat;
     font-size: 20px;
+    margin-left: 10px;
+    margin-top: 1px;
 }
 
 .error__field {
@@ -154,7 +196,7 @@ export default {
 
 .error__message__wrapper {
     display: block;
-    height: 40px;
+    height: 45px;
     margin-top: 10px;
 }
 
