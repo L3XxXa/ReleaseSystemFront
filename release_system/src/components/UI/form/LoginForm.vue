@@ -3,7 +3,7 @@
         <img src="@/assets/logo.png" class="logo__img">
         <p class="p1">Войти в аккаунт</p>
         <p class="p2">И получить доступ к системе</p>
-        <Form>
+        <Form @submit="loginUser">
             <span class="error__message__wrapper">
                 <ErrorMessage name="login" class="error__message"/>
             </span>
@@ -13,15 +13,22 @@
             <span class="error__message__wrapper">
                 <ErrorMessage name="password" class="error__message"/>
             </span>
-            <Field name="password" type="string" :rules="validate_field_not_empty" class="input"
+            <Field name="password" type="password" :rules="validate_field_not_empty" class="input"
                    @blur="checkInput('password')" :class="{'error__field' : empty_password}"
                    placeholder="Пароль" v-model="password"/>
+            <div class="checkbox__container">
+                <input type="checkbox" class="checkbox" v-model="rememberMe" id="rememberMe">
+                <label class="label">Запомнить меня</label>
+            </div>
+            <release-button class="button">Войти</release-button>
         </Form>
+        <p class="p2" @click="registerClick">Или зарегистрироваться</p>
     </div>
 </template>
 
 <script>
 import {ErrorMessage, Field, Form} from "vee-validate";
+import router from "@/router/router";
 
 export default {
     components: {
@@ -63,6 +70,12 @@ export default {
                     this.empty_password = true
                     break
             }
+        },
+        registerClick(){
+            router.push("/register")
+        },
+        loginUser(){
+            alert(this.login + this.password)
         }
     }
 }
@@ -73,7 +86,7 @@ export default {
 .form__background {
     width: 900px;
     position: fixed;
-    height: 900px;
+    height: 780px;
     background-color: #E4E4E4;
     border-radius: 40px;
     box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.3);
@@ -93,12 +106,23 @@ export default {
     margin-bottom: 5px;
 }
 
+
+.checkbox__container {
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
 .p2 {
     font-family: Montserrat;
     font-size: 22px;
     text-align: center;
     margin-top: 4px;
     margin-bottom: 50px;
+}
+
+.button {
+    display: block;
+    margin: 80px auto 20px;
 }
 
 .input {
@@ -112,6 +136,11 @@ export default {
     border-radius: 10px;
     font-size: 22px;
     padding-left: 10px;
+}
+
+.label {
+    font-family: Montserrat;
+    font-size: 20px;
 }
 
 .error__field {
@@ -134,6 +163,6 @@ export default {
     font-family: Montserrat;
     font-size: 20px;
     margin-left: 50px;
-    margin-bottom: 0px!important;
+    margin-bottom: 0 !important;
 }
 </style>

@@ -52,7 +52,7 @@ ve
             {{ auto_tests_required ? "Да" : "Нет" }}
           </button>
         </div>
-        <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
+        <release-button class="create__release__button" type="submit" @click="checkFields">Запланировать релиз</release-button>
       </Form>
       <popup-window id="popup_window" class="popup__window">{{ pop_up_text }}</popup-window>
     </div>

@@ -3,6 +3,7 @@ import createReleasePage from "@/pages/CreateReleasePage";
 import ListOfReleasesPage from "@/pages/ListOfReleasesPage";
 import settingsPage from "@/pages/SettingsPage";
 import loginPage from "@/pages/LoginPage.vue";
+import registrationPage from "@/pages/RegistrationPage.vue";
 const routes = [
     {
         path: '/createRelease',
@@ -20,7 +21,10 @@ const routes = [
         path: '/login',
         component: loginPage
     },
-
+    {
+        path: '/register',
+        component: registrationPage
+    }
 ]
 
 const router = createRouter({
