@@ -32,7 +32,7 @@
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="followers"
                @blur="checkInput('followers')" :class="{'error__field' : empty_followers}"/>
         <ErrorMessage name="followers" class="error__message"/>
-        <Field name="task_link" class="input__field" placeholder="Ссылка на задачу"
+        <Field name="task_link" class="input__field" placeholder="Задача"
                :rules="validURL" :validateOnBlur="true" v-model="task_link"
                @blur="checkInput('task_link')" :class="{'error__field' : empty_task_link}"/>
         <ErrorMessage name="task_link" class="error__message"/>
@@ -208,10 +208,9 @@ export default {
         return "Обязательное поле"
       }
       try {
-        const urlToCheck = new URL(str)
-        const patternOfPathname = new RegExp('\\/browse\\/[a-z]+-+[1-9]+', 'i')
-        if (!patternOfPathname.test(urlToCheck.pathname)) {
-          return "Неправильный формат ссылки"
+        const patternOfPathname = new RegExp('[A-Z]+-+[1-9]+', 'i')
+        if (!patternOfPathname.test(str)) {
+          return "Неправильное название задачи"
         }
       } catch (err) {
         return "Не является ссылкой"

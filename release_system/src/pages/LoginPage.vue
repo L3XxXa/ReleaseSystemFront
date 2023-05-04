@@ -8,6 +8,9 @@
 
 export default {
     name: "LoginPage",
+    methods:{
+
+    }
 }
 </script>
 

@@ -27,6 +27,7 @@ export default {
         logout(){
             router.push("/login")
             document.cookie = "password="
+            document.cookie= "logged=false"
         }
     }
 }

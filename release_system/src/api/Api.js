@@ -15,7 +15,8 @@ export default {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    data: data
+                    data: data,
+                    withCredentials: true
                 }).then(response => {
                     returnData = response
                 }).catch(error => {
@@ -23,7 +24,26 @@ export default {
                 })
             )
             return returnData
-
+        },
+        async registerUser(data) {
+            const url = new URL(App.data().link)
+            url.pathname = "api/v1/signup"
+            let returnData
+            setTimeout(
+                await axios({
+                    method: 'post',
+                    url: url.href,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: data,
+                }).then(response => {
+                    returnData = response
+                }).catch(error => {
+                    returnData = error
+                })
+            )
+            return returnData
         },
         async getReleases() {
             const url = new URL(App.data().link)
@@ -53,12 +73,34 @@ export default {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                withCredentials: true,
                 data: data
             }).then(response => {
                 returnData = response
             }).catch(error => {
                 returnData = error
             }))
+            return returnData
+        },
+        async login(data) {
+            const url = new URL(App.data().link)
+            url.pathname = "api/v1/login"
+            let returnData
+            setTimeout(
+                await axios({
+                    method: 'post',
+                    url: url.href,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    withCredentials: true
+                }).then(response => {
+                    console.log(data)
+                    returnData = response
+                }).catch(error => {
+                    returnData = error
+                })
+            )
             return returnData
         }
     }
