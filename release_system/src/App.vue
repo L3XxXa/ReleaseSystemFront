@@ -5,15 +5,13 @@
 </template>
 
 <script>
-
-
 export default {
   name: 'App',
   data() {
     return {
       link: 'http://localhost:8080' // Поменять ссыль на нужную
     }
-  }
+  },
 }
 </script>
 

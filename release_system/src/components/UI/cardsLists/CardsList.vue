@@ -25,7 +25,7 @@ export default {
     overflow-y: scroll;
     width: 100%;
     position: relative;
-    height: 90.6%;
+    height: 100%;
     bottom: 0;
 }
 
