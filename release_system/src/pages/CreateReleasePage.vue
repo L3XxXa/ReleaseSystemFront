@@ -9,33 +9,33 @@
         <Field name="app_name" type="string" :rules="validate_field_not_empty" class="input__field"
                @blur="checkInput('app_name')" :class="{'error__field' : empty_app_name}"
                placeholder="Название релиза" v-model="app_name"/>
-        <ErrorMessage name="app_name" class="error__message"/>
+        <ErrorMessage name="app_name" class="error__message" id="error__message"/>
         <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
                :class="{'error__field' : empty_start_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
                v-model="start_date"/>
-        <ErrorMessage name="start_date" class="error__message"/>
+        <ErrorMessage name="start_date" class="error__message" id="error__message"/>
         <Field name="finish_date" class="input__field" placeholder="Дата конца релиза" @blur="checkInput('finish_date')"
                :class="{'error__field' : empty_end_date}"
                onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date" :validateOnBlur="true"
                v-model="finish_date"/>
-        <ErrorMessage name="finish_date" class="error__message"/>
+        <ErrorMessage name="finish_date" class="error__message" id="error__message"/>
         <Field name="ver" class="input__field" placeholder="Версия релиза" @blur="checkInput('ver')"
                :class="{'error__field' : empty_ver}"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="ver"/>
-        <ErrorMessage name="ver" class="error__message"/>
+        <ErrorMessage name="ver" class="error__message" id="error__message"/>
         <Field name="on_duty" class="input__field" placeholder="Ответственный за релиз"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="on_duty" @blur="checkInput('on_duty')"
                :class="{'error__field' : empty_on_duty}"/>
-        <ErrorMessage name="on_duty" class="error__message"/>
+        <ErrorMessage name="on_duty" class="error__message" id="error__message"/>
         <Field name="followers" class="input__field" placeholder="Заинтересованный в релизе"
                :rules="validate_field_not_empty" :validateOnBlur="true" v-model="followers"
                @blur="checkInput('followers')" :class="{'error__field' : empty_followers}"/>
-        <ErrorMessage name="followers" class="error__message"/>
+        <ErrorMessage name="followers" class="error__message" id="error__message"/>
         <Field name="task_link" class="input__field" placeholder="Задача"
                :rules="validURL" :validateOnBlur="true" v-model="task_link"
                @blur="checkInput('task_link')" :class="{'error__field' : empty_task_link}"/>
-        <ErrorMessage name="task_link" class="error__message"/>
+        <ErrorMessage name="task_link" class="error__message" id="error__message"/>
         <div class="toggle__button__field">
           <p class="autotests__text">Нужно согласование?</p>
           <button type="button" class="button__toggle" :class="{'active':approve_required}"
@@ -270,6 +270,7 @@ export default {
       })()
       if (response.status === 200) {
         this.pop_up_text = "Релиз успешно запланирован"
+          this.openPopup()
           document.getElementById("error__message").style.display = "none"
           this.unsetData()
       } else {

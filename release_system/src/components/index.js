@@ -29,5 +29,5 @@ export default [
     approveRequestedReleases,
     plannedReleases,
     loginForm,
-    registerForm
+    registerForm,
 ]
