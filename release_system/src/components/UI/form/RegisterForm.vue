@@ -82,7 +82,10 @@ export default {
                     break
             }
         },
-        checkReenterPassword(){
+        checkReenterPassword(value){
+            if (!value){
+                return "Обязательное поле"
+            }
             if (this.reenter_password !== this.password){
                 return "Пароли не совпадают"
             }
@@ -121,50 +124,52 @@ export default {
 
 .form__background {
     padding: 30px;
-    width: 700px;
-    height: 800px;
+    width: 30%;
+    height: 50%;
     background-color: #E4E4E4;
     border-radius: 40px;
     box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.3);
 }
 
+
 .logo__img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    height: 20%;
+    width: 30%;
 }
 
 .p1 {
     font-family: Montserrat;
-    font-size: 30px;
+    font-size: 24px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 5px;
 }
 
 .p2 {
     font-family: Montserrat;
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     margin-top: 4px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
-
 .button {
     display: block;
-    margin: 80px auto 20px;
+    margin: 30px auto 0;
 }
 
 .input {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 600px;
-    height: 62px;
+    width: 90%;
+    height: 50px;
     font-family: Montserrat;
     border: 0;
     border-radius: 10px;
-    font-size: 22px;
+    font-size: 19px;
     padding-left: 10px;
 }
 
@@ -212,7 +217,7 @@ export default {
 .error__message {
     color: red;
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 19px;
     margin-left: 50px;
     margin-bottom: 0 !important;
 }
