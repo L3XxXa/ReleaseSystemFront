@@ -4,6 +4,7 @@ import ListOfReleasesPage from "@/pages/ListOfReleasesPage";
 import settingsPage from "@/pages/SettingsPage";
 import loginPage from "@/pages/LoginPage.vue";
 import registrationPage from "@/pages/RegistrationPage.vue";
+import extendedCard from "@/pages/ExtendedCardPage.vue";
 const routes = [
     {
         path: '/createRelease',
@@ -24,6 +25,10 @@ const routes = [
     {
         path: '/register',
         component: registrationPage
+    },
+    {
+        path: '/releases/:app_name',
+        component: extendedCard
     }
 ]
 

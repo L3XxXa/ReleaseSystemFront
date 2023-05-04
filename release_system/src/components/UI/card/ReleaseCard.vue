@@ -21,6 +21,8 @@
 <script>
 import App from "@/App";
 import api from "@/api/Api";
+import router from "@/router/router";
+import store from "@/store/index";
 
 export default {
     name: "ReleaseCard",
@@ -45,7 +47,8 @@ export default {
             return day + '.' + month + '.' + years
         },
         showData() {
-
+            store.commit('setFields', this.release)
+            router.push(`/releases/${this.release.app_name}`)
         },
         parseDate() {
             const start_date = this.unnormalizeDate(this.release.start_date)
