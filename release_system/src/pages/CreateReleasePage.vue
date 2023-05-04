@@ -270,7 +270,8 @@ export default {
       })()
       if (response.status === 200) {
         this.pop_up_text = "Релиз успешно запланирован"
-        this.unsetData()
+          document.getElementById("error__message").style.display = "none"
+          this.unsetData()
       } else {
         console.log(response.message)
         if (response.status >= 500) {
