@@ -4,6 +4,7 @@
                 v-for="release in releases"
                 :key="release.id"
                 :release="release"
+                @changeVisible="updateVisible"
         />
     </div>
 </template>
@@ -16,7 +17,13 @@ export default {
             type: Array,
             required: true
         }
-    }
+    },
+  methods:{
+      updateVisible(value){
+        console.log(value + " cards list")
+        this.$emit('changeVisible', value)
+      }
+  }
 }
 </script>
 

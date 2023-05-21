@@ -17,7 +17,6 @@
         </card-button>
     </div>
     <div class="space"/>
-
 </template>
 
 <script>
@@ -32,12 +31,12 @@ export default {
         release: {
             type: Object,
             required: true
-        }
+        },
     },
     data() {
         return {
             date: "",
-            autotests: ""
+            autotests: "",
         }
     },
     methods: {
@@ -76,9 +75,13 @@ export default {
             }
         },
         editRelease() {
+          if (this.release.status === "in_progress"){
+            alert("Нельзя менять даты в процессе релиза")
+            return
+          }
           store.commit('setFields', this.release)
-          router.push(`/releases/${this.release.app_name}/changeDate`)
-
+          // router.push(`/releases/${this.release.app_name}/changeDate`)
+          this.$emit('changeVisible', true)
         },
         parseAutotests() {
             if (this.release.auto_tests_required) {

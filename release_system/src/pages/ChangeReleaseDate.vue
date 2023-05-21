@@ -4,7 +4,50 @@
   </div>
   <div class="content">
     <h1 class="heading">Изменить время релиза {{ release.app_name }}</h1>
+    <p class="field__name">
+      Дата начала релиза
+    </p>
+    <div class="field__container">
+      <p class="field__data">{{ release.start_date}}</p>
+    </div>
+    <p class="field__name">
+      Дата конца релиза
+    </p>
+    <div class="field__container">
+      <p class="field__data">{{ release.finish_date}}</p>
+    </div>
+    <p class="field__name">
+      Задача
+    </p>
+    <div class="field__container">
+      <p class="field__data">{{ release.task_link}}</p>
+    </div>
+    <p class="field__name">
+      Ответственный за релиз
+    </p>
+    <div class="field__container">
+      <p class="field__data">{{ release.on_duty}}</p>
+    </div>
+    <p class="field__name">
+      Заинтересованные в релизе
+    </p>
+    <div class="field__container">
+      <p class="field__data">{{ release.followers}}</p>
+    </div>
+    <p class="field__name">
+      Автотесты
+    </p>
+    <div class="field__container">
+      <p class="field__data">{{ release.auto_tests_required}}</p>
+    </div>
+    <p class="field__name">
+      Логи релиза
+    </p>
+    <div class="field__container">
+      <pre class="field__data">{{ release.logs }}</pre>
+    </div>
   </div>
+  
 </template>
 
 <script>
@@ -100,5 +143,23 @@ export default {
   width: 20%;
   margin-left: 4px;
   margin-top: 4px;
+}
+
+.field__name{
+  font-family: Montserrat;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.field__data{
+  font-family: Montserrat;
+  padding: 10px;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.field__container{
+  background-color: #F3F3F3;
+  border-radius: 20px;
 }
 </style>

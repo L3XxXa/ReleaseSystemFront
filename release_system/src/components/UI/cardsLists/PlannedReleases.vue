@@ -3,7 +3,7 @@
         <div class="status__container">
             <p class="status__text">Запланированы</p>
         </div>
-        <cards-list class="list__container" :releases="releases"/>
+        <cards-list class="list__container" :releases="releases" @changeVisible="updateVisible"/>
     </div>
 </template>
 
@@ -16,6 +16,12 @@ export default {
             required: true
         }
     },
+  methods:{
+    updateVisible(value){
+      console.log(value + " approve requested releases")
+      this.$emit('changeVisible', value)
+    }
+  }
 }
 </script>
 

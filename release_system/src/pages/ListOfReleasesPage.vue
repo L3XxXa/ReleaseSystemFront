@@ -4,14 +4,19 @@
             <navigation-menu></navigation-menu>
         </div>
         <div class="content">
-            <h1 class="heading">
-                Список релизов
-            </h1>
-            <div class="lists__wrapper">
-                <in-process-releases :releases="inProgressReleases" class="element"/>
-                <approve-requested-releases :releases="approveRequestedReleases" class="element"/>
-                <planned-releases :releases="plannedReleases" class="element"/>
-            </div>
+          <Modal :visible="isVisible" title="" :closable="false" :cancelButton="{text: 'отмена', onclick: ()=> {isVisible = false}}"	:okButton="{text: 'Поменять дату', onclick: changeDate}">
+            <change-time>
+
+            </change-time>
+          </Modal>
+          <h1 class="heading">
+            Список релизов
+          </h1>
+          <div class="lists__wrapper">
+            <in-process-releases :releases="inProgressReleases" class="element" @changeVisible="updateVisible"/>
+            <approve-requested-releases :releases="approveRequestedReleases" class="element" @changeVisible="updateVisible"/>
+            <planned-releases :releases="plannedReleases" class="element" @changeVisible="updateVisible"/>
+          </div>
         </div>
     </div>
 </template>
@@ -19,15 +24,20 @@
 <script>
 import App from "@/App.vue";
 import api from "@/api/Api";
+import {Modal} from "usemodal-vue3";
 
 export default {
     name: "ListOfReleasesPage",
+    components:{
+      Modal
+    },
     data() {
         return {
             releases: [],
             approveRequestedReleases: [],
             plannedReleases: [],
             inProgressReleases: [],
+            isVisible: false
         }
     },
     methods: {
@@ -46,22 +56,28 @@ export default {
             }
             this.divideReleasesByStatus(response.data.Message)
         },
-
+        updateVisible(value){
+          this.isVisible = value
+        },
         divideReleasesByStatus(releases) {
-            for (let i = 0; i < releases.length; i++) {
-                switch (releases[i].status) {
-                    case "approval_requested":
-                        this.approveRequestedReleases.push(releases[i])
-                        break
-                    case "planned":
-                        this.plannedReleases.push(releases[i])
-                        break
-                    case "in_progress":
-                        this.inProgressReleases.push(releases[i])
-                        break
-                }
+          for (let i = 0; i < releases.length; i++) {
+            switch (releases[i].status) {
+              case "approval_requested":
+                this.approveRequestedReleases.push(releases[i])
+                break
+              case "planned":
+                this.plannedReleases.push(releases[i])
+                break
+              case "in_progress":
+                this.inProgressReleases.push(releases[i])
+                break
             }
-        }
+          }
+        },
+      changeDate(){
+        this.isVisible = false
+
+      }
     },
     mounted() {
         this.getData()
@@ -81,6 +97,10 @@ export default {
     width: 20%;
     margin-left: 4px;
     margin-top: 4px;
+}
+
+.modal{
+  font-family: Montserrat;
 }
 
 .content {
