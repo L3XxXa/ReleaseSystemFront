@@ -15,7 +15,6 @@
              v-model="finish_date"/>
       <ErrorMessage name="finish_date" class="error__message"/>
     </Form>
-
   </div>
 </template>
 
@@ -79,6 +78,10 @@ export default {
           this.empty_end_date = false
           break
       }
+      let release = store.getters.getData
+      release.start_date = this.normalizeDate(this.start_date)
+      release.finish_date = this.normalizeDate(this.finish_date)
+      store.commit('setFields', this.release)
       return true
     },
 
