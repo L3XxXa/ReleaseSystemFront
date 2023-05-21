@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :class="{'tag_in_process':tag==='В процессе', 'tag_planned': tag ==='Запланирован', 'tag_approve_requested' : tag === 'Ожидает подтверждения'}">
     <p class="text">{{ tag }}</p>
   </div>
 </template>
@@ -22,12 +22,28 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.tag_in_process{
   width: max-content;
   background-color: #62DF8D;
-  font-size: medium;
-
   border-radius: 30px;
-  text-align: center;
+}
+
+.tag_planned{
+  width: max-content;
+  background-color: #8D98FF;
+  border-radius: 30px;
+}
+
+
+.tag_approve_requested{
+  width: max-content;
+  background-color: #DFB562;
+  border-radius: 30px;
+}
+
+
+.text{
+  font-family: Montserrat;
+  margin: 0;
 }
 </style>

@@ -82,9 +82,13 @@ export default ({
               return  "В процессе"
           }
         },
+        parseFollowers(followers) {
+          return followers.join(', ')
+        },
         getData(){
             this.release = store.getters.getData
             this.release.status = this.parseStatus(this.release.status)
+            this.release.followers = this.parseFollowers(this.release.followers)
             console.log(this.release.status + " status")
             this.release.start_date = this.unnormalizeDate(this.release.start_date)
             this.release.finish_date = this.unnormalizeDate(this.release.finish_date)
@@ -100,7 +104,8 @@ export default ({
   .heading {
     font-family: Montserrat;
     font-weight: normal;
-    text-align: center;
+    display: block;
+    margin-left: 10px;
   }
 
   .container{
