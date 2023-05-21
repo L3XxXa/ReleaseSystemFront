@@ -78,14 +78,14 @@ export default {
     left: 0;
     overflow-x: hidden;
     float: left;
-    width: 17%;
+    width: 20%;
     margin-left: 4px;
     margin-top: 4px;
 }
 
 .content {
     float: right;
-    width: 83%;
+    width: 80%;
     margin-top: 30px;
 }
 
@@ -98,7 +98,7 @@ export default {
 .lists__wrapper{
     height: 84%;
     position: absolute;
-    width: 82.5%;
+    width: 80%;
 }
 .element{
     display: inline-block;
