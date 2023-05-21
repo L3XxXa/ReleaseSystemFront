@@ -1,5 +1,5 @@
 <template>
-    <div class="list__container" :class="{'list__container__no__overflow':releases.length <= 3}">
+    <div class="list__container" :class="{'list__container__no__overflow':releases.length <= 2}">
         <release-card
                 v-for="release in releases"
                 :key="release.id"
@@ -25,7 +25,7 @@ export default {
     overflow-y: scroll;
     width: 100%;
     position: relative;
-    height: 100%;
+    height: 90%;
     bottom: 0;
 }
 

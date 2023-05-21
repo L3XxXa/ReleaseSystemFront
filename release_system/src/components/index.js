@@ -13,6 +13,7 @@ import approveRequestedReleases from "@/components/UI/cardsLists/ApproveRequeste
 import plannedReleases from "@/components/UI/cardsLists/PlannedReleases.vue";
 import loginForm from "@/components/UI/form/LoginForm.vue";
 import registerForm from "@/components/UI/form/RegisterForm.vue";
+import releaseTag from "@/components/UI/tags/ReleaseTag.vue";
 
 export default [
     navigationMenuButton,
@@ -30,4 +31,5 @@ export default [
     plannedReleases,
     loginForm,
     registerForm,
+    releaseTag
 ]
