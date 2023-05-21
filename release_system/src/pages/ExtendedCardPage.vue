@@ -127,6 +127,7 @@ export default ({
     font-weight: normal;
     display: block;
     margin-left: 10px;
+    width: 70%;
   }
 
   .container{

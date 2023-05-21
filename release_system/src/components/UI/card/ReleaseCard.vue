@@ -1,5 +1,6 @@
 <template>
-    <div class="card" @click="showData">
+    <div class="card">
+      <div @click="showData">
         <p class="release__name">
             {{ release.app_name }}
         </p>
@@ -7,6 +8,7 @@
             {{ date }}
         </p>
         <p class="content__1">Автотесты {{ autotests }}</p>
+      </div>
         <card-button class="edit__button" @click="editRelease">
             <img src="@/assets/buttons/edit.png" class="img">
         </card-button>
@@ -74,7 +76,9 @@ export default {
             }
         },
         editRelease() {
-            alert("EDITING")
+          store.commit('setFields', this.release)
+          router.push(`/releases/${this.release.app_name}/changeDate`)
+
         },
         parseAutotests() {
             if (this.release.auto_tests_required) {
