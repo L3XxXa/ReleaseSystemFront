@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
     <h3 class="heading">
-      Поменять время релиза
+      Поменять время релиза {{ release_name }}
     </h3>
-    <Form @submit="submittingForm">
+    <Form>
       <Field name="start_date" class="input__field" placeholder="Дата начала релиза" @blur="checkInput('start_date')"
              :class="{'error__field' : empty_start_date}"
              onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date"
@@ -14,15 +14,13 @@
              onfocus="(this.type='date')" onblur="(this.type='date')" :rules="validate_date" :validateOnBlur="true"
              v-model="finish_date"/>
       <ErrorMessage name="finish_date" class="error__message"/>
-      <release-button class="create__release__button" type="submit" @click="checkFields"></release-button>
     </Form>
-
   </div>
 </template>
 
 <script>
 import {ErrorMessage, Field, Form} from "vee-validate";
-//import api from "@/api/Api";
+import store from "@/store";
 export default {
   name: "ChangeTime",
   components:{
@@ -30,6 +28,7 @@ export default {
   },
   data(){
     return{
+      release_name: '',
       start_date: '',
       finish_date: '',
       empty_start_date: false,
@@ -79,6 +78,10 @@ export default {
           this.empty_end_date = false
           break
       }
+      let release = store.getters.getData
+      release.start_date = this.normalizeDate(this.start_date)
+      release.finish_date = this.normalizeDate(this.finish_date)
+      store.commit('setFields', this.release)
       return true
     },
 
@@ -90,9 +93,24 @@ export default {
     normalizeDate(value) {
       return value += "T00:00:00.0339226+07:00"
     },
-    submittingForm(){
-      alert("Submitting form")
+    unnormalizeDate(date) {
+      date = date.substring(0, 10)
+      const day = date.substring(8, 10)
+      const month = date.substring(5, 7)
+      const years = date.slice(0, 4)
+      return day + '.' + month + '.' + years
+    },
+    getData(){
+      let release = store.getters.getData
+      this.release_name = release.app_name
+      this.start_date = this.unnormalizeDate(release.start_date)
+      this.finish_date = this.unnormalizeDate(release.finish_date)
+      // this.start_date = (release.start_date)
+      // this.finish_date = (release.finish_date)
     }
+  },
+  mounted() {
+    this.getData()
   }
 }
 </script>
@@ -101,7 +119,7 @@ export default {
 .heading{
   font-family: Montserrat;
   font-weight: normal;
-  margin-left: 29%;
+  text-align: center;
 }
 .error__field {
   border: solid red 2px !important;
@@ -109,16 +127,14 @@ export default {
 }
 
 .input__field {
-  margin-left: 26%;
   margin-top: 15px;
   border: solid #F5F5F5 2px;
   background-color: #F5F5F5;
-  width: 40%;
+  width: 95%;
   height: 50px;
   border-radius: 10px;
   font-family: Montserrat;
   font-size: 20px;
-  padding-left: 15px;
 }
 
 .error__field::placeholder{
@@ -126,10 +142,9 @@ export default {
 }
 
 .wrapper{
-  border: 2px solid black;
   padding: 10px;
   border-radius: 15px;
-  width: 50%;
+  width: 100%;
 }
 
 .create__release__button {

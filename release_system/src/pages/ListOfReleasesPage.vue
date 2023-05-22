@@ -4,14 +4,18 @@
             <navigation-menu></navigation-menu>
         </div>
         <div class="content">
-            <h1 class="heading">
-                Список релизов
-            </h1>
-            <div class="lists__wrapper">
-                <in-process-releases :releases="inProgressReleases" class="element"/>
-                <approve-requested-releases :releases="approveRequestedReleases" class="element"/>
-                <planned-releases :releases="plannedReleases" class="element"/>
-            </div>
+          <Modal :visible="isVisible" title="" :closable="false" :cancelButton="{text: 'отмена', onclick: ()=> {isVisible = false}}"	:okButton="{text: 'Поменять дату', onclick: changeDate}">
+            <change-time>
+            </change-time>
+          </Modal>
+          <h1 class="heading">
+            Список релизов
+          </h1>
+          <div class="lists__wrapper">
+            <in-process-releases :releases="inProgressReleases" class="element" @changeVisible="updateVisible"/>
+            <approve-requested-releases :releases="approveRequestedReleases" class="element" @changeVisible="updateVisible"/>
+            <planned-releases :releases="plannedReleases" class="element" @changeVisible="updateVisible"/>
+          </div>
         </div>
     </div>
 </template>
@@ -19,15 +23,21 @@
 <script>
 import App from "@/App.vue";
 import api from "@/api/Api";
+import {Modal} from "usemodal-vue3";
+import store from "@/store";
 
 export default {
     name: "ListOfReleasesPage",
+    components:{
+      Modal
+    },
     data() {
         return {
             releases: [],
             approveRequestedReleases: [],
             plannedReleases: [],
             inProgressReleases: [],
+            isVisible: false
         }
     },
     methods: {
@@ -46,22 +56,63 @@ export default {
             }
             this.divideReleasesByStatus(response.data.Message)
         },
-
+        updateVisible(value){
+          this.isVisible = value
+        },
         divideReleasesByStatus(releases) {
-            for (let i = 0; i < releases.length; i++) {
-                switch (releases[i].status) {
-                    case "approval_requested":
-                        this.approveRequestedReleases.push(releases[i])
-                        break
-                    case "planned":
-                        this.plannedReleases.push(releases[i])
-                        break
-                    case "in_progress":
-                        this.inProgressReleases.push(releases[i])
-                        break
-                }
+          for (let i = 0; i < releases.length; i++) {
+            switch (releases[i].status) {
+              case "approval_requested":
+                this.approveRequestedReleases.push(releases[i])
+                break
+              case "planned":
+                this.plannedReleases.push(releases[i])
+                break
+              case "in_progress":
+                this.inProgressReleases.push(releases[i])
+                break
             }
+          }
+        },
+      createRequestForChange(release){
+        const approval_requested = this.getApprovalRequest(release)
+        return {
+          app_name: release.app_name,
+          task_link: release.task_link,
+          start_date: release.start_date,
+          finish_date: release.finish_date,
+          ver: release.ver,
+          auto_tests_required: release.auto_tests_required,
+          approve_required: approval_requested,
+          on_duty: release.on_duty,
+          followers: release.followers
         }
+      },
+      async changeDate(){
+        let release = store.getters.getData
+        release = this.createRequestForChange(release)
+        const url = new URL(App.data().link)
+        url.pathname = "api/v1/change"
+        let response
+        await (async () => {
+          response = await api.methods.changeDate(release)
+        })()
+        console.log(response)
+        if (response.status === 200) {
+          alert("Время установлено")
+        } else {
+          alert("Ошибка")
+        }
+        this.isVisible = false
+      },
+      getApprovalRequest(release) {
+        switch (release.status){
+          case "approval_requested":
+            return true
+          case "planned":
+            return false
+        }
+      }
     },
     mounted() {
         this.getData()
@@ -81,6 +132,10 @@ export default {
     width: 20%;
     margin-left: 4px;
     margin-top: 4px;
+}
+
+.modal{
+  font-family: Montserrat;
 }
 
 .content {

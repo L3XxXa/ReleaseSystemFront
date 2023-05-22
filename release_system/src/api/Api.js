@@ -25,6 +25,27 @@ export default {
             )
             return returnData
         },
+        async changeDate(data) {
+            const url = new URL(App.data().link)
+            url.pathname = "api/v1/change"
+            let returnData
+            setTimeout(
+                await axios({
+                    method: 'patch',
+                    url: url.href,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: data,
+                    withCredentials: true
+                }).then(response => {
+                    returnData = response
+                }).catch(error => {
+                    returnData = error
+                })
+            )
+            return returnData
+        },
         async registerUser(data) {
             const url = new URL(App.data().link)
             url.pathname = "api/v1/signup"

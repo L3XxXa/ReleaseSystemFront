@@ -3,7 +3,7 @@
         <div class="status__container">
             <p class="status__text">В процессе</p>
         </div>
-        <cards-list :releases="releases"/>
+        <cards-list :releases="releases" @changeVisible="updateVisible"/>
     </div>
 </template>
 
