@@ -79,6 +79,10 @@ export default {
             alert("Нельзя менять даты в процессе релиза")
             return
           }
+          if (this.release.status === "approval_requested"){
+            alert("Нельзя менять даты релиза с согласованием")
+            return
+          }
           store.commit('setFields', this.release)
           // router.push(`/releases/${this.release.app_name}/changeDate`)
           this.$emit('changeVisible', true)

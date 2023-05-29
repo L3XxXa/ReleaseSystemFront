@@ -73,7 +73,26 @@ export default {
                 break
             }
           }
+          this.approveRequestedReleases = this.sortReleases(this.approveRequestedReleases)
+          this.plannedReleases = this.sortReleases(this.plannedReleases)
+          this.inProgressReleases = this.sortReleases(this.inProgressReleases)
         },
+      sortReleases(releases){
+        return releases.sort(this.compareReleases)
+      },
+      compareReleases(a, b){
+        let date1 = new Date(a.finish_date)
+        let date2 = new Date(b.finish_date)
+        console.log(date1 + " is DATE1")
+        console.log(date2 + " IS DATE2")
+        if (date1<date2){
+          return -1
+        }
+        if (date1>date2){
+          return 1
+        }
+        return 0
+      },
       createRequestForChange(release){
         const approval_requested = this.getApprovalRequest(release)
         return {
