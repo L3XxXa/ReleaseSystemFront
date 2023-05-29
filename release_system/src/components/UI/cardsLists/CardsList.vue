@@ -18,12 +18,14 @@ export default {
             required: true
         }
     },
-  methods:{
-      updateVisible(value){
-        console.log(value + " cards list")
-        this.$emit('changeVisible', value)
-      }
-  }
+    methods:{
+        updateVisible(value){
+          console.log(value + " cards list")
+          this.$emit('changeVisible', value)
+        },
+
+    },
+
 }
 </script>
 
