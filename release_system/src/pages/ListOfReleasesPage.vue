@@ -123,6 +123,7 @@ export default {
           alert("Ошибка")
         }
         this.isVisible = false
+        location.reload()
       },
       getApprovalRequest(release) {
         switch (release.status){
