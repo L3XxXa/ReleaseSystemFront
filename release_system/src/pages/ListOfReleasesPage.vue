@@ -17,6 +17,7 @@
             <planned-releases :releases="plannedReleases" class="element" @changeVisible="updateVisible"/>
           </div>
         </div>
+      <popup-window id="popup_window" class="popup__window">{{ pop_up_text }}</popup-window>
     </div>
 </template>
 
@@ -37,7 +38,8 @@ export default {
             approveRequestedReleases: [],
             plannedReleases: [],
             inProgressReleases: [],
-            isVisible: false
+            isVisible: false,
+            pop_up_text: ""
         }
     },
     methods: {
@@ -117,13 +119,21 @@ export default {
           response = await api.methods.changeDate(release)
         })()
         console.log(response)
-        if (response.status === 200) {
-          alert("Время установлено")
-        } else {
-          alert("Ошибка")
-        }
+        if (response.status !== 200) {
+          this.pop_up_text = "Не получилось изменить время релиза"
+          this.openPopup()
+          return
+        } else
         this.isVisible = false
         location.reload()
+
+      },
+      openPopup() {
+        document.getElementById("popup_window").style.display = "block"
+        setTimeout(this.closePopup, 5000)
+      },
+      closePopup() {
+        document.getElementById("popup_window").style.display = "none"
       },
       getApprovalRequest(release) {
         switch (release.status){
@@ -156,6 +166,26 @@ export default {
 
 .modal{
   font-family: Montserrat;
+}
+
+.popup__window {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 20px;
+  opacity: 0;
+  background-color: white;
+  animation: fadein 4s;
+}
+
+@keyframes fadein {
+  0%, 30%, 70%, 100% {
+    opacity: 0
+  }
+  30%, 70% {
+    opacity: 1;
+  }
 }
 
 .content {
