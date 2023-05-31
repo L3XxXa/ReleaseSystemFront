@@ -4,7 +4,7 @@
             <navigation-menu></navigation-menu>
         </div>
         <div class="content">
-          <Modal :visible="isVisible" title="" :closable="true" :cancelButton="{text: 'Отмена', onclick: ()=> {isVisible = false}}"	:okButton="{text: 'Поменять дату', onclick: changeDate}">
+          <Modal :visible="isVisible" title="" :closable="false" :cancelButton="{text: 'Отмена', onclick: ()=> {isVisible = false}}"	:okButton="{text: 'Поменять дату', onclick: changeDate}">
             <change-time>
             </change-time>
           </Modal>

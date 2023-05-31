@@ -100,18 +100,7 @@ export default {
       const years = date.slice(0, 4)
       return day + '.' + month + '.' + years
     },
-    getData(){
-      let release = store.getters.getData
-      this.release_name = release.app_name
-      this.start_date = this.unnormalizeDate(release.start_date)
-      this.finish_date = this.unnormalizeDate(release.finish_date)
-      // this.start_date = (release.start_date)
-      // this.finish_date = (release.finish_date)
-    }
   },
-  mounted() {
-    this.getData()
-  }
 }
 </script>
 

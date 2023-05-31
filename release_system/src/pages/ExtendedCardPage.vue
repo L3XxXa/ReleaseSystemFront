@@ -4,6 +4,7 @@
   </div>
   <div class="content">
     <div class="container">
+        <img src="@/assets/buttons/go_back.png" class="img" @click="$router.push('/releases')">
       <release-tag :tag="release.status" class="tag"></release-tag>
       <h1 class="heading">
         Релиз {{ release.app_name}}
@@ -61,7 +62,8 @@ export default ({
     name: "ExtendedCardPage",
     data(){
         return{
-          release: Object
+          release: Object,
+          isVisible: false
         }
     },
     methods:{
@@ -113,6 +115,9 @@ export default ({
           console.log(this.release.logs)
           this.release.start_date = this.unnormalizeDate(this.release.start_date)
           this.release.finish_date = this.unnormalizeDate(this.release.finish_date)
+        },
+        changeVisible(){
+          this.isVisible = true
         }
     },
     mounted() {
@@ -143,6 +148,19 @@ export default ({
     font-family: Montserrat;
     margin-left: 10px;
     font-size: 20px;
+  }
+
+  .img {
+    height: 28px;
+    width: 30px;
+    align-self: center;
+  }
+
+  .edit__release__button{
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .field__data{

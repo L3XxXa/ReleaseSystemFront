@@ -8,10 +8,6 @@
     <img src="@/assets/navigationMenuImages/list-symbol.png" class="img">
     Список релизов
   </navigation-menu-button>
-  <navigation-menu-button @click="$router.push('/settings')">
-    <img src="@/assets/navigationMenuImages/settings-symbol.png" class="img">
-    Настройки
-  </navigation-menu-button>
   <navigation-menu-button @click="logout">
     <img src="@/assets/navigationMenuImages/log-out-symbol.png" class="img">
     Выйти
