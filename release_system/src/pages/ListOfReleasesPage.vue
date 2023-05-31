@@ -12,8 +12,8 @@
             Список релизов
           </h1>
           <div class="lists__wrapper">
-            <in-process-releases :releases="inProgressReleases" class="element" @changeVisible="updateVisible"/>
-            <approve-requested-releases :releases="approveRequestedReleases" class="element" @changeVisible="updateVisible"/>
+            <in-process-releases :releases="inProgressReleases" class="element" @changeVisible="updateVisible" @errorChange="showError"/>
+            <approve-requested-releases :releases="approveRequestedReleases" class="element" @changeVisible="updateVisible" @errorChange="showError"/>
             <planned-releases :releases="plannedReleases" class="element" @changeVisible="updateVisible"/>
           </div>
         </div>
@@ -55,12 +55,17 @@ export default {
             if (response.status === 200) {
                 this.releases = [...this.releases, ...response.data.Message]
             } else {
-                alert("Ошибка")
+              this.pop_up_text = "Не получилось найти релизы"
+              this.openPopup()
             }
             this.divideReleasesByStatus(response.data.Message)
         },
         updateVisible(value){
           this.isVisible = value
+        },
+        showError(value){
+          this.pop_up_text = value
+          this.openPopup()
         },
         divideReleasesByStatus(releases) {
           for (let i = 0; i < releases.length; i++) {

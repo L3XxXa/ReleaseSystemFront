@@ -76,11 +76,11 @@ export default {
         },
         editRelease() {
           if (this.release.status === "in_progress"){
-            alert("Нельзя менять даты в процессе релиза")
+            this.$emit('errorChange', "Нельзя менять даты в процессе релиза")
             return
           }
           if (this.release.status === "approval_requested"){
-            alert("Нельзя менять даты релиза с согласованием")
+            this.$emit('errorChange', "Нельзя менять даты для релиза с согласованием")
             return
           }
           store.commit('setFields', this.release)

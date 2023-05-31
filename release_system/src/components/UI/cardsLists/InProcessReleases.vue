@@ -3,7 +3,7 @@
         <div class="status__container">
             <p class="status__text">В процессе</p>
         </div>
-        <cards-list :releases="releases" @changeVisible="updateVisible"/>
+        <cards-list :releases="releases" @errorChange="errorChangeEmit"/>
     </div>
 </template>
 
@@ -16,6 +16,11 @@ export default {
             required: true
         }
     },
+    methods:{
+      errorChangeEmit(value){
+        this.$emit('errorChange', value)
+      }
+    }
 }
 </script>
 

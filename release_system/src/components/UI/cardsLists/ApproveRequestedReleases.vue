@@ -3,7 +3,7 @@
         <div class="status__container">
             <p class="status__text">Ожидают подтверждения</p>
         </div>
-        <cards-list :releases="releases" @changeVisible="updateVisible"/>
+        <cards-list :releases="releases" @changeVisible="updateVisible" @errorChange="errorChangeEmit"/>
     </div>
 </template>
 
@@ -20,6 +20,10 @@ export default {
     updateVisible(value){
       console.log(value + " approve requested releases")
       this.$emit('changeVisible', value)
+    },
+    errorChangeEmit(value){
+      this.$emit('errorChange', value)
+
     }
   }
 }

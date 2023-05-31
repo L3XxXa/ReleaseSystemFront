@@ -5,6 +5,7 @@
                 :key="release.id"
                 :release="release"
                 @changeVisible="updateVisible"
+                @errorChange="errorChangeEmit"
         />
     </div>
 </template>
@@ -23,7 +24,10 @@ export default {
           console.log(value + " cards list")
           this.$emit('changeVisible', value)
         },
+        errorChangeEmit(value){
+          this.$emit('errorChange', value)
 
+        }
     },
 
 }
