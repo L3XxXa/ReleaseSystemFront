@@ -62,6 +62,7 @@
 <script>
 import {ErrorMessage, Field, Form} from "vee-validate";
 import api from "@/api/Api";
+import router from "@/router/router";
 
 export default {
   name: "CreateReleasePage",
@@ -287,7 +288,27 @@ export default {
       }
       this.openPopup()
     },
+    checkCookies(){
+      let loginCookie = this.getCookie('login')
+      let passwordCookie = this.getCookie('password')
+      if (loginCookie == null || passwordCookie == null){
+        router.push("/login")
+      }
+    },
+    getCookie(cName) {
+      const name = cName + "=";
+      const cDecoded = decodeURIComponent(document.cookie); //to be careful
+      const cArr = cDecoded.split('; ');
+      let res;
+      cArr.forEach(val => {
+        if (val.indexOf(name) === 0) res = val.substring(name.length);
+      })
+      return res
+    }
   },
+  mounted() {
+    this.checkCookies()
+  }
 
 }
 </script>

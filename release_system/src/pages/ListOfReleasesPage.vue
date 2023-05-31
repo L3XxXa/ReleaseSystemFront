@@ -4,7 +4,7 @@
             <navigation-menu></navigation-menu>
         </div>
         <div class="content">
-          <Modal :visible="isVisible" title="" :closable="false" :cancelButton="{text: 'отмена', onclick: ()=> {isVisible = false}}"	:okButton="{text: 'Поменять дату', onclick: changeDate}">
+          <Modal :visible="isVisible" title="" :closable="true" :cancelButton="{text: 'Отмена', onclick: ()=> {isVisible = false}}"	:okButton="{text: 'Поменять дату', onclick: changeDate}">
             <change-time>
             </change-time>
           </Modal>
@@ -26,6 +26,7 @@ import App from "@/App.vue";
 import api from "@/api/Api";
 import {Modal} from "usemodal-vue3";
 import store from "@/store";
+import router from "@/router/router";
 
 export default {
     name: "ListOfReleasesPage",
@@ -142,9 +143,30 @@ export default {
           case "planned":
             return false
         }
+      },
+      checkCookies(){
+        let loginCookie = this.getCookie('login')
+        let passwordCookie = this.getCookie('password')
+        if (loginCookie == null || passwordCookie == null){
+          router.push("/login")
+        }
+        else{
+          this.getData()
+        }
+      },
+      getCookie(cName) {
+        const name = cName + "=";
+        const cDecoded = decodeURIComponent(document.cookie); //to be careful
+        const cArr = cDecoded.split('; ');
+        let res;
+        cArr.forEach(val => {
+          if (val.indexOf(name) === 0) res = val.substring(name.length);
+        })
+        return res
       }
     },
     mounted() {
+        this.checkCookies()
         this.getData()
     }
 }
