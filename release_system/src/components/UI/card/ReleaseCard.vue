@@ -68,7 +68,6 @@ export default {
                 response = await api.methods.deleteRelease(data)
             })()
             if (response.status === 200) {
-                alert("Релиз удален")
                 location.reload()
             } else {
                 alert("Ошибка")
