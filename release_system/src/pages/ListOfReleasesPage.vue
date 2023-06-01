@@ -155,9 +155,6 @@ export default {
         if (loginCookie == null || passwordCookie == null){
           router.push("/login")
         }
-        else{
-          this.getData()
-        }
       },
       getCookie(cName) {
         const name = cName + "=";
